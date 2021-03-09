@@ -1,13 +1,13 @@
-[submodule "/home/reo101/.oh-my-zsh/custom/plugins/fast-syntax-highlighting"]
+[submodule ".oh-my-zsh/custom/plugins/fast-syntax-highlighting"]
 	path = .oh-my-zsh/custom/plugins/fast-syntax-highlighting
 	url = https://github.com/zdharma/fast-syntax-highlighting
-[submodule "/home/reo101/.oh-my-zsh/custom/plugins/zsh-autocomplete"]
+[submodule ".oh-my-zsh/custom/plugins/zsh-autocomplete"]
 	path = .oh-my-zsh/custom/plugins/zsh-autocomplete
 	url = https://github.com/marlonrichert/zsh-autocomplete
-[submodule "/home/reo101/.oh-my-zsh/custom/plugins/zsh-autosuggestions"]
+[submodule ".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
 	path = .oh-my-zsh/custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
-[submodule "/home/reo101/.oh-my-zsh/custom/themes/powerlevel10k"]
+[submodule ".oh-my-zsh/custom/themes/powerlevel10k"]
 	path = .oh-my-zsh/custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k
 [submodule "vimwiki"]
