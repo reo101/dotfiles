@@ -1,0 +1,25 @@
+#!/bin/sh
+
+PUBLIC_IP="$(curl ifconfig.me 2>/dev/null)"
+EMPTY=0
+
+if [ -z "$PUBLIC_IP" ]; then
+    PUBLIC_IP="No IP"
+    EMPTY=1
+fi
+
+case $BLOCK_BUTTON in
+    1)
+        if [ $EMPTY -eq 0 ]; then
+            echo "$PUBLIC_IP" | tr -d '\n' | xclip -selection clipboard && notify-send "IP $PUBLIC_IP copied to clipboard."
+        fi
+        ;;
+    3)
+        notify-send "🌐 Public IP module" "Left click to copy the IP to the clipboard"
+        ;;
+	6)
+        "$TERMINAL" -e "$EDITOR" "$0"
+        ;;
+esac
+
+echo "$PUBLIC_IP"

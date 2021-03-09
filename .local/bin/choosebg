@@ -1,0 +1,26 @@
+#!/bin/sh
+
+bgloc="${XDG_DATA_HOME:-$HOME/.local/share/}/bg"
+
+CHOSEN=$(\ls $HOME/.local/share/bg | dmenu -i -r -l 15 -p "Choose wallpaper:")
+
+[[ $CHOSEN -eq "" ]] || echo $CHOSEN \
+    | xargs -I {} wal -i $bgloc/{} \
+    && bash $HOME/.config/wal/postrun \
+    && pidof dwm >/dev/null && xdotool key super+F12 \
+    && notify-send -t 2000 "Changed wallpaper"
+
+#&& $HOME/.config/wal/done.sh \
+
+#&& killall dunst \
+#&& dunst -config ~/.config/dunst/dunstrc \
+  #-cb "$(xgetres background)" \
+  #-lb "$(xgetres background)" \
+  #-nb "$(xgetres background)" \
+  #-cf "$(xgetres foreground)" \
+  #-lf "$(xgetres foreground)" \
+  #-nf "$(xgetres foreground)" \
+  #-bf "$(xgetres foreground)" \
+  #-frame_color "$(xgetres foreground)" \
+
+# ls $HOME/.local/share/bg | dmenu -l 15 -p "Choose wallpaper:" | xargs -I {} wal -i $HOME/.local/share/bg/{} && notify-send -t 2000 "Changed wallpaper" && kill -HUP $(pgrep -u $USER "\bdwm$") && xdotool key super+F12

@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+MASK_DIR="/home/reo101/Pictures/Masks"
+DISTRO="arch"
+
+MASK1="bg"
+MASK2="fg"
+
+PATH_MASK1="$MASK_DIR/$DISTRO-$MASK1-mask.png"
+PATH_MASK2="$MASK_DIR/$DISTRO-$MASK2-mask.png"
+
+TINT_MASK1=true
+TINT_MASK2=true
+
+TINT_MASK1_PARAMS="-fill blue -tint 25"
+TINT_MASK2_PARAMS="-fill blue -tint 50"
+
+BLUR_MASK1=true
+BLUR_MASK2=true
+
+BLUR_MASK1_PARAMS="-channel RGBA -blur 0x8"
+BLUR_MASK2_PARAMS="-channel RGBA -blur 0x4"
+
+maim /tmp/scrot.png
+
+case $1 in
+
+    "fast")
+        # fast, bad
+        convert /tmp/scrot.png -mask $INVERSE_MASK \
+            -blur 0x8 +mask /tmp/scrot-$MASK1-blur-bad.png
+        cp /tmp/scrot-fg-blur-bad.png /tmp/lockscreen.png
+        ;;
+
+    *)
+        # slow, good
+        
+        # Crop out the part of the image that is going to be blurred
+        convert /tmp/scrot.png $PATH_MASK1 -alpha off \
+            -compose CopyOpacity -composite +compose /tmp/scrot-$MASK1.png
+        # Tint selected regions
+        $TINT_MASK1 && convert /tmp/scrot-$MASK1.png $TINT_MASK1_PARAMS /tmp/scrot-$MASK1.png
+        # Actually blur the crop-out
+        $BLUR_MASK1 && convert /tmp/scrot-$MASK1.png $BLUR_MASK1_PARAMS /tmp/scrot-$MASK1.png && \
+        `# Make the blurred crop-out opaque, i.e. friendlier edges` \
+        convert /tmp/scrot-$MASK1.png -alpha off /tmp/scrot-$MASK1.png
+
+        # Crop out the part of the image that is going to be blurred
+        convert /tmp/scrot.png $PATH_MASK2 -alpha off \
+            -compose CopyOpacity -composite +compose /tmp/scrot-$MASK2.png
+        # Tint selected regions
+        $TINT_MASK2 && convert /tmp/scrot-$MASK2.png $TINT_MASK2_PARAMS /tmp/scrot-$MASK2.png
+        # Actually blur the crop-out
+        $BLUR_MASK2 && convert /tmp/scrot-$MASK2.png $BLUR_MASK2_PARAMS /tmp/scrot-$MASK2.png && \
+        `# Make the blurred crop-out opaque, i.e. friendlier edges` \
+        convert /tmp/scrot-$MASK2.png -alpha off /tmp/scrot-$MASK2.png
+
+        # Recrop the opaque-d image and slap it on top of the original image using a mask
+        convert /tmp/scrot.png \
+            /tmp/scrot-$MASK1.png $PATH_MASK1 -composite \
+            /tmp/scrot-$MASK2.png $PATH_MASK2 -composite \
+            /tmp/scrot-final.png
+        # Copy the final image to a constant filename - lockscreen.png
+        cp /tmp/scrot-final.png /tmp/lockscreen.png
+        ;;
+
+esac
+
+notify-send "Lockscreen created!" "Lockscreen created at /tmp/lockscreen.png"
+
+
+# # Crop out the part of the image that is going to be blurred
+# convert /tmp/scrot.png $MASK2MATH -alpha off \
+#     -compose CopyOpacity -composite +compose /tmp/scrot-$MASK2.png
+# # Actually blur the crop-out
+# convert /tmp/scrot-$MASK2-only.png -channel RGBA -blur 0x8 /tmp/scrot-$MASK2-blurred.png
+# # Make the blurred crop-out opaque, i.e. friendlier edges
+# convert /tmp/scrot-$MASK2-blurred.png -alpha off /tmp/scrot-$MASK2-blur-opaque.png
