@@ -1,0 +1,26 @@
+alias vim="nvim"
+alias vi="nvim"
+alias sv="sudo nvim"
+alias vimb="vimb ~/Projects/Home/Website/index.html"
+# alias ls="logo-ls"
+# alias lc="colorls"
+alias ls="lsd"
+alias cp="advcp -rvi"
+alias mv="advmv -vi"
+alias mkdir="mkdir -vp"
+alias dfr="/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME"
+alias neofetch="neofetch --gtk3 off --gtk2 off"
+alias please="sudo"
+alias shutup="shutdown"
+alias jrc="java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=5005,suspend=y"
+#unalias md
+#md() {
+  #fileName=${1:-"README.md"}
+  #mdp "$fileName"
+#}
+
+if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]]; then
+    exec /usr/bin/startx >> $HOME/.xsession-errors 2>&1
+fi
+
+#xmodmap -e "keycode 94 = backslash bar"
