@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-MASK_DIR="/home/reo101/Pictures/Masks"
+MASK_DIR="$HOME/Pictures/Masks"
 DISTRO="arch"
 
 MASK1="bg"
