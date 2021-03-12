@@ -32,6 +32,21 @@
             "filetypes": ["tex", "plaintex", "context"]
         }
     },
+    "snippets.priority": 10, // 1
+    "yank.priority": 1,
+    "suggest.languageSourcePriority": 5, // 99,
+    "coc.source.file.priority": 2,
+    "coc.source.around.priority": 3,
+    "coc.source.buffer.priority": 4,
+    "clang-format-style-options.shortcut": "voldikss",
+//    "ccls.codeLens.enabled": true,
+//    "ccls.highlighting.bold.parameters": true,
+//    "ccls.highlighting.enabled.enumConstants": true,
+//    "clangd.enabled": true,
+//    "clangd.disableCompletion": true,
+//    "clangd.disableSnippetCompletion": true,
+//    "clangd.semanticHighlighting": true,
+//    "clangd.serverCompletionRanking": true,
     "java.configuration.runtimes": [
         {
             "name": "JavaSE-11",

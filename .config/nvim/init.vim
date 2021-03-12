@@ -114,7 +114,7 @@ Plug 'junegunn/fzf.vim' " TODO learn hotkeys
 Plug 'fisadev/FixedTaskList.vim'
 
 " Async autocompletion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
 
 " Completion from other opened files
 Plug 'Shougo/context_filetype.vim'
@@ -166,7 +166,6 @@ Plug 'tpope/vim-rhubarb'
 Plug 'shumphrey/fugitive-gitlab.vim'
 
 " Git/mercurial/others diff icons on the side of the file lines
-Plug 'mhinz/vim-signify'
 if using_neovim || has('patch-8.0.902')
   Plug 'mhinz/vim-signify'
 else
@@ -175,7 +174,8 @@ endif
 
 " Yank history navigation
 " ^P and ^N for prev/next yanks
-Plug 'vim-scripts/YankRing.vim'
+" Replaced by coc-yank
+" Plug 'vim-scripts/YankRing.vim'
 
 " Automated and better `:make`
 Plug 'neomake/neomake' " TODO see `:help neomake.txt`
@@ -184,9 +184,9 @@ Plug 'neomake/neomake' " TODO see `:help neomake.txt`
 Plug 'ryanoasis/vim-devicons'
 
 " ultisnips
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 " vim-snippets
-Plug 'honza/vim-snippets'
+" Plug 'honza/vim-snippets'
 
 " CPP syntax
 " Managed by polyglot
@@ -198,7 +198,8 @@ Plug 'honza/vim-snippets'
 Plug 'dylanaraps/wal.vim'
 
 " Rainbow brackets
-Plug 'frazrepo/vim-rainbow'
+" Replaced by coc-omnisharp " FIXME
+" Plug 'frazrepo/vim-rainbow'
 
 " vim-dispatch
 " replaced by neomake
@@ -222,6 +223,7 @@ Plug 'tpope/vim-repeat'
 
 " goyo
 Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 
 " Rich graphical debugger
 Plug 'puremourning/vimspector'
@@ -651,13 +653,13 @@ autocmd BufWritePost *.tex AsyncRun compiler "%"
 " vim-snippets -------------------------
 
 " Tab for autocompletion
-let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsExpandTrigger="<tab>"
 
-" C-b for next autofill
-let g:UltiSnipsJumpForwardTrigger="<tab>" " <c-b>
-" FIXME
-" C-z for previous autofill
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>" " <c-z>
+" " C-b for next autofill
+" let g:UltiSnipsJumpForwardTrigger="<tab>" " <c-b>
+" " FIXME
+" " C-z for previous autofill
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>" " <c-z>
 
 " Fold map -----------------------------
 
@@ -738,6 +740,7 @@ function! s:goyo_enter()
     set noshowmode
     set noshowcmd
     set scrolloff=999
+    Limelight
     " ...
 endfunction
 
@@ -753,6 +756,7 @@ function! s:goyo_leave()
     set showmode
     set showcmd
     set scrolloff=5
+    Limelight!
     " ...
 endfunction
 
@@ -868,14 +872,14 @@ let g:AutoClosePumvisible = {"ENTER": "\<C-Y>", "ESC": "\<ESC>"}
 
 " Yankring -------------------------------
 
-if using_neovim
-    let g:yankring_history_dir = '~/.config/nvim/'
-    " Fix for yankring and neovim problem when system has non-text things
-    " copied in clipboard
-    let g:yankring_clipboard_monitor = 0
-else
-    let g:yankring_history_dir = '~/.vim/dirs/'
-endif
+" if using_neovim
+"     let g:yankring_history_dir = '~/.config/nvim/'
+"     " Fix for yankring and neovim problem when system has non-text things
+"     " copied in clipboard
+"     let g:yankring_clipboard_monitor = 0
+" else
+"     let g:yankring_history_dir = '~/.vim/dirs/'
+" endif
 
 " Molokai theme ------------------------
 
