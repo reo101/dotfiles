@@ -13,6 +13,8 @@ alias neofetch="neofetch --gtk3 off --gtk2 off"
 alias please="sudo"
 alias shutup="shutdown"
 alias jrc="java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=5005,suspend=y"
+alias yay="paru"
+alias yv="youtube-viewer"
 #unalias md
 #md() {
   #fileName=${1:-"README.md"}
