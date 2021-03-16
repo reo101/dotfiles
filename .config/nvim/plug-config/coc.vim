@@ -175,3 +175,36 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+" Global extensions
+let g:coc_global_extensions = [
+    \ 'coc-yank',
+    \ 'coc-vimlsp',
+    \ 'coc-tasks',
+    \ 'coc-snippets',
+    \ 'coc-prettier',
+    \ 'coc-lists',
+    \ 'coc-lbdbq',
+    \ 'coc-json',
+    \ 'coc-highlight',
+    \ 'coc-github-users',
+    \ 'coc-emmet',
+    \ 'coc-discord',
+    \ 'coc-db',
+    \ 'coc-calc',
+    \ 'coc-browser',
+    \ 'coc-actions',
+    \ 'coc-tsserver',
+    \ 'coc-texlab',
+    \ 'coc-styled-components',
+    \ 'coc-sh',
+    \ 'coc-python',
+    \ 'coc-java',
+    \ 'coc-java-debug',
+    \ 'coc-html',
+    \ 'coc-css',
+    \ 'coc-cmake'
+    \ ]
+
+    " \ 'coc-java-vimspector',
+
