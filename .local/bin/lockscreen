@@ -66,13 +66,6 @@ case $1 in
 
 esac
 
-notify-send "Lockscreen created!" "Lockscreen created at /tmp/lockscreen.png"
+# notify-send "Lockscreen created!" "Lockscreen created at /tmp/lockscreen.png"
 
-
-# # Crop out the part of the image that is going to be blurred
-# convert /tmp/scrot.png $MASK2MATH -alpha off \
-#     -compose CopyOpacity -composite +compose /tmp/scrot-$MASK2.png
-# # Actually blur the crop-out
-# convert /tmp/scrot-$MASK2-only.png -channel RGBA -blur 0x8 /tmp/scrot-$MASK2-blurred.png
-# # Make the blurred crop-out opaque, i.e. friendlier edges
-# convert /tmp/scrot-$MASK2-blurred.png -alpha off /tmp/scrot-$MASK2-blur-opaque.png
+i3lock -i /tmp/lockscreen.png
