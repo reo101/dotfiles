@@ -16,3 +16,15 @@
 [submodule ".local/src/mpd-rich-presence-discord"]
 	path = .local/src/mpd-rich-presence-discord
 	url = https://www.github.com/justas-d/mpd-rich-presence-discord
+[submodule ".local/src/dwm"]
+	path = .local/src/dwm
+	url = https://www.github.com/reo101/dwm
+[submodule ".local/src/dwmblocks"]
+	path = .local/src/dwmblocks
+	url = https://www.github.com/reo101/dwmblocks
+[submodule ".local/src/st"]
+	path = .local/src/st
+	url = https://www.github.com/reo101/st
+[submodule ".local/src/dmenu"]
+	path = .local/src/dmenu
+	url = https://www.github.com/reo101/dmenu
