@@ -117,6 +117,7 @@ Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' } " Live LaTeX compilation 
 Plug 'kevinoid/vim-jsonc'                           " Json with comments
 Plug 'vimwiki/vimwiki'                              " VimWiki - personal wiki (im using it with markdown)
 Plug 'christoomey/vim-tmux-navigator'               " tmux integration
+Plug 'edkolev/tmuxline.vim'                         " tmux airline integration
 if using_neovim
     Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}} " Async autocompletion
     Plug 'nvim-treesitter/nvim-treesitter'          " Treesitter for syntax highlighting
@@ -166,6 +167,7 @@ source $HOME/.config/nvim/plug-config/mdlive.vim        " MD live
 source $HOME/.config/nvim/plug-config/signify.vim       " Signify
 source $HOME/.config/nvim/plug-config/airline.vim       " Airline
 source $HOME/.config/nvim/plug-config/tmux.vim          " Tmux
+source $HOME/.config/nvim/plug-config/tmuxline.vim      " Tmux Airline
 
 " KEYBINDS
 vnoremap <leader>f :fold<CR>
