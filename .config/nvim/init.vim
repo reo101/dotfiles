@@ -98,6 +98,7 @@ Plug 'kevinoid/vim-jsonc'                           " Json with comments
 Plug 'vimwiki/vimwiki'                              " VimWiki - personal wiki (im using it with markdown)
 Plug 'christoomey/vim-tmux-navigator'               " tmux integration
 Plug 'edkolev/tmuxline.vim'                         " tmux airline integration
+Plug 'sethwoodworth/vim-cute-python'                " Conceal python (like emacs protty-symbols)
 if using_neovim
     Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}} " Async autocompletion
     if has('nvim-0.5')
