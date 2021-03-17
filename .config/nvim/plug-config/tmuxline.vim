@@ -16,8 +16,8 @@ let g:tmuxline_preset = {
       \'c'    : '#H',
       \'win'  : '#I #W',
       \'cwin' : '#I #W',
-      \'x'    : '#(clock)',
-      \'y'    : '#W %R',
+      \'x'    : '%H:%M',
+      \'y'    : '#W',
       \'z'    : '#H'}
 
 " let g:tmuxline_preset = {
