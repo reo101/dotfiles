@@ -120,8 +120,10 @@ Plug 'christoomey/vim-tmux-navigator'               " tmux integration
 Plug 'edkolev/tmuxline.vim'                         " tmux airline integration
 if using_neovim
     Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}} " Async autocompletion
-    Plug 'nvim-treesitter/nvim-treesitter'          " Treesitter for syntax highlighting
-    Plug 'nvim-treesitter/playground'               " Playground for treesitter, used when creating things
+    if has('nvim-0.5')
+    :   Plug 'nvim-treesitter/nvim-treesitter'          " Treesitter for syntax highlighting
+        Plug 'nvim-treesitter/playground'               " Playground for treesitter, used when creating things
+    endif
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'] } " Markdown Live Preview
 endif
 
