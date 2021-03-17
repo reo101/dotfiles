@@ -16,9 +16,19 @@ let g:tmuxline_preset = {
       \'c'    : '#H',
       \'win'  : '#I #W',
       \'cwin' : '#I #W',
-      \'x'    : '%a',
+      \'x'    : '#(clock)',
       \'y'    : '#W %R',
       \'z'    : '#H'}
+
+" let g:tmuxline_preset = {
+"       \'a'    : '#S',
+"       \'b'    : '#W',
+"       \'c'    : '#H',
+"       \'win'  : '#I #W',
+"       \'cwin' : '#I #W',
+"       \'x'    : '%a',
+"       \'y'    : '#W %R',
+"       \'z'    : '#H'}
 
 " let g:tmuxline_preset = {
 "       \'a'    : '#S',
