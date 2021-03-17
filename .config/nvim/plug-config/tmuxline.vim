@@ -1,3 +1,6 @@
+let g:airline#extensions#tmuxline#enabled = 1
+let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
+
 " Stock presets
 "let g:tmuxline_preset = 'nightly_fox'
 " or
