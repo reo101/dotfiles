@@ -120,8 +120,10 @@ Plug 'christoomey/vim-tmux-navigator'               " tmux integration
 Plug 'edkolev/tmuxline.vim'                         " tmux airline integration
 if using_neovim
     Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}} " Async autocompletion
-    Plug 'nvim-treesitter/nvim-treesitter'          " Treesitter for syntax highlighting
-    Plug 'nvim-treesitter/playground'               " Playground for treesitter, used when creating things
+    if has('nvim-0.5')
+    :   Plug 'nvim-treesitter/nvim-treesitter'          " Treesitter for syntax highlighting
+        Plug 'nvim-treesitter/playground'               " Playground for treesitter, used when creating things
+    endif
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'] } " Markdown Live Preview
 endif
 
@@ -145,21 +147,23 @@ source $HOME/.config/nvim/settings/general.vim          " General
 " Plugins settings and mappings
 
 source $HOME/.config/nvim/plug-config/tagbar.vim        " Tagbar
-source $HOME/.config/nvim/plug-config/nerdtree.vim      " NERDTree
+" source $HOME/.config/nvim/plug-config/nerdtree.vim      " NERDTree
 source $HOME/.config/nvim/plug-config/tasklist.vim      " TaskList
 source $HOME/.config/nvim/plug-config/neomake.vim       " Neomake
 source $HOME/.config/nvim/plug-config/fzf.vim           " FZF
 source $HOME/.config/nvim/plug-config/coc.vim           " CoC
 source $HOME/.config/nvim/plug-config/vimwiki.vim       " VimWiki
-source $HOME/.config/nvim/plug-config/treesitter.vim    " Treesitter
+if has('nvim-0.5')
+    source $HOME/.config/nvim/plug-config/treesitter.vim    " Treesitter
+endif
 source $HOME/.config/nvim/plug-config/fugitive.vim      " Fugitive
 source $HOME/.config/nvim/plug-config/latexlive.vim     " LaTeX live
-" source $HOME/.config/nvim/plug-config/lsp.vim         " LSP (soon)
-" source $HOME/.config/nvim/plug-config/snippets.vim    " Snippets
+" source $HOME/.config/nvim/plug-config/lsp.vim           " LSP (soon)
+" source $HOME/.config/nvim/plug-config/snippets.vim      " Snippets
 source $HOME/.config/nvim/plug-config/vifm.vim          " Vifm
 source $HOME/.config/nvim/plug-config/asyncrun.vim      " AsyncRun
-" source $HOME/.config/nvim/plug-config/rainbow.vim     " Rainbow 
-" source $HOME/.config/nvim/plug-config/ack.vim         " Ack
+" source $HOME/.config/nvim/plug-config/rainbow.vim       " Rainbow 
+" source $HOME/.config/nvim/plug-config/ack.vim           " Ack
 source $HOME/.config/nvim/plug-config/goyo.vim          " Goyo
 source $HOME/.config/nvim/plug-config/vimspector.vim    " Vimspector
 source $HOME/.config/nvim/plug-config/winchoose.vim     " Window chooser
