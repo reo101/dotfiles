@@ -1,4 +1,4 @@
-                                         "                                 ___     
+"                                 ___     
 "        ___        ___          /__/\    
 "       /__/\      /  /\        |  |::\   
 "       \  \:\    /  /:/        |  |:|:\  
@@ -9,15 +9,19 @@
 "    \  \:\__|:|     /__/:/    \  \:\     
 "     \__\::::/      \__\/      \  \:\    
 "         ~~~~                   \__\/    
+" &&
+"      ___           ___           ___                                    ___     
+"     /__/\         /  /\         /  /\          ___        ___          /__/\    
+"     \  \:\       /  /:/_       /  /::\        /__/\      /  /\        |  |::\   
+"      \  \:\     /  /:/ /\     /  /:/\:\       \  \:\    /  /:/        |  |:|:\  
+"  _____\__\:\   /  /:/ /:/_   /  /:/  \:\       \  \:\  /__/::\      __|__|:|\:\ 
+" /__/::::::::\ /__/:/ /:/ /\ /__/:/ \__\:\  ___  \__\:\ \__\/\:\__  /__/::::| \:\
+" \  \:\~~\~~\/ \  \:\/:/ /:/ \  \:\ /  /:/ /__/\ |  |:|    \  \:\/\ \  \:\~~\__\/
+"  \  \:\  ~~~   \  \::/ /:/   \  \:\  /:/  \  \:\|  |:|     \__\::/  \  \:\      
+"   \  \:\        \  \:\/:/     \  \:\/:/    \  \:\__|:|     /__/:/    \  \:\     
+"    \  \:\        \  \::/       \  \::/      \__\::::/      \__\/      \  \:\    
+"     \__\/         \__\/         \__\/           ~~~~                   \__\/     
 
-" Fisa-vim-config, a config for both Vim and NeoVim
-" http://vim.fisadev.com
-" version: 12.0.1
-
-" To use fancy symbols wherever possible, change this setting from 0 to 1
-" and use a font from https://github.com/ryanoasis/nerd-fonts in your terminal
-" (if you aren't using one of those fonts, you will see funny characters here.
-" Turst me, they look nice when using one of those fonts).
 let fancy_symbols_enabled = 1
 
 set runtimepath+=~/.vim,/var/lib/vim/addons,/usr/share/vim/vimfiles,/usr/share/vim/vim74,/usr/share/vim/vimfiles/after,/var/lib/vim/addons/after,~/.vim/after
@@ -28,31 +32,8 @@ let using_vim = !using_neovim
 
 " ============================================================================
 " Vim-plug initialization
-" Avoid modifying this section, unless you are very sure of what you are doing
 
-let vim_plug_just_installed = 0
-if using_neovim
-    let vim_plug_path = expand('~/.config/nvim/autoload/plug.vim')
-else
-    let vim_plug_path = expand('~/.vim/autoload/plug.vim')
-endif
-if !filereadable(vim_plug_path)
-    echo "Installing Vim-plug..."
-    echo ""
-    if using_neovim
-        silent !mkdir -p ~/.config/nvim/autoload
-        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    else
-        silent !mkdir -p ~/.vim/autoload
-        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    endif
-    let vim_plug_just_installed = 1
-endif
-
-" manually load vim-plug the first time
-if vim_plug_just_installed
-    :execute 'source '.fnameescape(vim_plug_path)
-endif
+source $HOME/.config/nvim/settings/vimpluginit.vim  " vim-plug init
 
 " ============================================================================
 " Active plugins
@@ -134,7 +115,7 @@ call plug#end()
 " Install plugins the first time vim runs
 
 if vim_plug_just_installed
-    echo "Installing Bundles, please ignore key map error messages"
+    echo "Installing Plugs, please ignore key map error messages"
     :PlugInstall
 endif
 

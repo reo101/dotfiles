@@ -101,12 +101,12 @@ set wildmode=longest:full,full
 " save as sudo
 ca w!! w !sudo tee "%"
 
-" tab navigation mappings
-map tt :tabnew
-map <M-Right> :tabn<CR>
-imap <M-Right> <ESC>:tabn<CR>
-map <M-Left> :tabp<CR>
-imap <M-Left> <ESC>:tabp<CR>
+" buffer navigation mappings
+map tt :enew<CR> 
+map <M-Right> :bnext<CR>
+imap <M-Right> <ESC>:bnext<CR>
+map <M-Left> :bprevious<CR>
+imap <M-Left> <ESC>:bprevious<CR>
 
 " when scrolling, keep cursor 3 lines away from screen border
 set scrolloff=3
