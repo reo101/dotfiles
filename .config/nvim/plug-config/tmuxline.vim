@@ -13,11 +13,11 @@ let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
 let g:tmuxline_preset = {
       \'a'    : '#S',
       \'b'    : '#W',
-      \'c'    : '#H',
+      \'c'    : '',
       \'win'  : '#I #W',
       \'cwin' : '#I #W',
-      \'x'    : '%H:%M',
-      \'y'    : '#W',
+      \'x'    : '',
+      \'y'    : '%H:%M',
       \'z'    : '#H'}
 
 " let g:tmuxline_preset = {
