@@ -184,7 +184,6 @@ let g:coc_global_extensions = [
     \ 'coc-snippets',
     \ 'coc-prettier',
     \ 'coc-lists',
-    \ 'coc-lbdbq',
     \ 'coc-json',
     \ 'coc-highlight',
     \ 'coc-github-users',
