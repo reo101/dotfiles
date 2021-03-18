@@ -111,6 +111,10 @@ imap <M-Left> <ESC>:bprevious<CR>
 " when scrolling, keep cursor 3 lines away from screen border
 set scrolloff=3
 
+" Conceal words if not in insert ot VB mode
+set concealcursor="nc"
+set conceallevel=2
+
 " clear search results
 nnoremap <silent> // :noh<CR>
 
