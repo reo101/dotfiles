@@ -99,6 +99,7 @@ Plug 'vimwiki/vimwiki'                              " VimWiki - personal wiki (i
 Plug 'christoomey/vim-tmux-navigator'               " tmux integration
 Plug 'edkolev/tmuxline.vim'                         " tmux airline integration
 Plug 'sethwoodworth/vim-cute-python'                " Conceal python (like emacs protty-symbols)
+Plug 'tweekmonster/startuptime.vim'                 " Startup time counter (per plugin)
 if using_neovim
     Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}} " Async autocompletion
     if has('nvim-0.5')
