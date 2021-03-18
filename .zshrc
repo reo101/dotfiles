@@ -114,5 +114,3 @@ bindkey -v
 
 source ~/.zsh_environment
 source ~/.zsh_profile
-
-[ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit;}
