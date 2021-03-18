@@ -100,6 +100,7 @@ Plug 'christoomey/vim-tmux-navigator'               " tmux integration
 Plug 'edkolev/tmuxline.vim'                         " tmux airline integration
 Plug 'sethwoodworth/vim-cute-python'                " Conceal python (like emacs protty-symbols)
 Plug 'tweekmonster/startuptime.vim'                 " Startup time counter (per plugin)
+Plug 'mhinz/vim-startify'                           " Start screen
 if using_neovim
     Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}} " Async autocompletion
     if has('nvim-0.5')
@@ -154,6 +155,7 @@ source $HOME/.config/nvim/plug-config/signify.vim       " Signify
 source $HOME/.config/nvim/plug-config/airline.vim       " Airline
 source $HOME/.config/nvim/plug-config/tmux.vim          " Tmux
 source $HOME/.config/nvim/plug-config/tmuxline.vim      " Tmux Airline
+source $HOME/.config/nvim/plug-config/startify.vim      " Startify
 
 " KEYBINDS
 vnoremap <leader>f :fold<CR>
