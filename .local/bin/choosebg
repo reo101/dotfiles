@@ -7,6 +7,7 @@ CHOSEN=$(\ls $HOME/.local/share/bg | dmenu -i -r -l 15 -p "Choose wallpaper:")
 [[ $CHOSEN -eq "" ]] || echo $CHOSEN \
     | xargs -I {} wal -i $bgloc/{} \
     && bash $HOME/.config/wal/postrun \
+    && bash $HOME/.local/bin/wal-discord -t \
     && pidof dwm >/dev/null && xdotool key super+F12 \
     && notify-send -t 2000 "Changed wallpaper"
 
