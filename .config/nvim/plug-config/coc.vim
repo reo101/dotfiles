@@ -189,7 +189,6 @@ let g:coc_global_extensions = [
     \ 'coc-highlight',
     \ 'coc-github-users',
     \ 'coc-emmet',
-    \ 'coc-discord',
     \ 'coc-db',
     \ 'coc-calc',
     \ 'coc-browser',
