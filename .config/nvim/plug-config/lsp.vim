@@ -1,4 +1,4 @@
-lua <<EOF
+:lua << EOF
 vim.cmd('packadd nvim-lspconfig')
 require'nvim_lsp'.clangd.setup(name="clangd", settings = {},)
 EOF
