@@ -107,6 +107,7 @@ map <M-Right> :bnext<CR>
 imap <M-Right> <ESC>:bnext<CR>
 map <M-Left> :bprevious<CR>
 imap <M-Left> <ESC>:bprevious<CR>
+map <M-q> :bd<CR>
 
 " when scrolling, keep cursor 3 lines away from screen border
 set scrolloff=3
