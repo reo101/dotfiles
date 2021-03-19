@@ -10,7 +10,7 @@ function! s:goyo_enter()
     set noshowmode
     set noshowcmd
     set scrolloff=999
-    Limelight
+    " Limelight
     SignifyDisableAll
     " ...
 endfunction
@@ -27,7 +27,7 @@ function! s:goyo_leave()
     set showmode
     set showcmd
     set scrolloff=5
-    Limelight!
+    " Limelight!
     SignifyEnableAll
     " ...
 endfunction
