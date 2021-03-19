@@ -104,7 +104,7 @@ Plug 'mhinz/vim-startify'                           " Start screen
 if using_neovim
     Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}} " Async autocompletion
     if has('nvim-0.5')
-    :   Plug 'nvim-treesitter/nvim-treesitter'          " Treesitter for syntax highlighting
+        Plug 'nvim-treesitter/nvim-treesitter'          " Treesitter for syntax highlighting
         Plug 'nvim-treesitter/playground'               " Playground for treesitter, used when creating things
     endif
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'] } " Markdown Live Preview
