@@ -1,9 +1,8 @@
 xrandr --output Virtual-1 --mode 1280x800 &
 
-./.fehbg
-
 mpd &
 #mpd-notification &
+mpd_discord_richpresence --fork --no-idle
 
 wal -R
 
