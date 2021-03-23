@@ -102,6 +102,7 @@ Plug 'sethwoodworth/vim-cute-python'                " Conceal python (like emacs
 Plug 'tweekmonster/startuptime.vim'                 " Startup time counter (per plugin)
 Plug 'mhinz/vim-startify'                           " Start screen
 Plug 'romainl/vim-cool'                             " :noh after cursor movement
+Plug 'justinmk/vim-sneak'                           " Quick two or one (see config) letter searches
 if using_neovim
     Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}} " Async autocompletion
     if has('nvim-0.5')
@@ -157,6 +158,7 @@ source $HOME/.config/nvim/plug-config/airline.vim       " Airline
 source $HOME/.config/nvim/plug-config/tmux.vim          " Tmux
 source $HOME/.config/nvim/plug-config/tmuxline.vim      " Tmux Airline
 source $HOME/.config/nvim/plug-config/startify.vim      " Startify
+source $HOME/.config/nvim/plug-config/sneak.vim         " Sneak
 
 " KEYBINDS
 vnoremap <leader>f :fold<CR>
