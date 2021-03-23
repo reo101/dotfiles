@@ -5,6 +5,9 @@ let g:airline#extensions#tabline#enabled = 1
 " let g:airline#extensions#tabline#right_sep = ''
 " let g:airline#extensions#tabline#right_alt_sep = ''
 
+" Just show the filename (no path) in the tab
+let g:airline#extensions#tabline#fnamemod = ':t'
+
 let g:airline_powerline_fonts = 1
 " let g:airline_theme = 'wal' " 'deus' "'bubblegum'
 let g:airline_theme = 'monokai_tasty'
