@@ -92,7 +92,7 @@ else
 endif
 
 " set colorscheme
-colorscheme monokai-phoenix
+colorscheme molokai
 
 " autocompletion of files and commands behaves like shell
 " (complete only the common part, list the options that match)
