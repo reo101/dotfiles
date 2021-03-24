@@ -1,25 +1,57 @@
 #!/bin/sh
 
 clock=$(date '+%I')
+minutesToHalf=$(echo "$(date '+%M')-30" | bc)
+if [ $(echo "${minutesToHalf#-}<15" | bc) -eq 1 ]; then
+    closeToHalf=true
+else
+    closeToHalf=false
+fi
 
 case "$clock" in
-	"00") icon="🕛" ;;
-	"01") icon="🕐" ;;
-	"02") icon="🕑" ;;
-	"03") icon="🕒" ;;
-	"04") icon="🕓" ;;
-	"05") icon="🕔" ;;
-	"06") icon="🕕" ;;
-	"07") icon="🕖" ;;
-	"08") icon="🕗" ;;
-	"09") icon="🕘" ;;
-	"10") icon="🕙" ;;
-	"11") icon="🕚" ;;
-	"12") icon="🕛" ;;
+	"00") 
+        $closeToHalf && icon="🕧" || icon="🕛"
+        ;;
+	"01") 
+        $closeToHalf && icon="🕜" || icon="🕐"
+        ;;
+	"02") 
+        $closeToHalf && icon="🕝" || icon="🕑"
+        ;;
+	"03") 
+        $closeToHalf && icon="🕞" || icon="🕒"
+        ;;
+	"04") 
+        $closeToHalf && icon="🕟" || icon="🕓"
+        ;;
+	"05") 
+        $closeToHalf && icon="🕠" || icon="🕔"
+        ;;
+	"06") 
+        $closeToHalf && icon="🕡" || icon="🕕"
+        ;;
+	"07") 
+        $closeToHalf && icon="🕢" || icon="🕖"
+        ;;
+	"08") 
+        $closeToHalf && icon="🕣" || icon="🕗"
+        ;;
+	"09") 
+        $closeToHalf && icon="🕤" || icon="🕘"
+        ;;
+	"10") 
+        $closeToHalf && icon="🕥" || icon="🕙"
+        ;;
+	"11") 
+        $closeToHalf && icon="🕦" || icon="🕚"
+        ;;
+	"12") 
+        $closeToHalf && icon="🕧" || icon="🕛"
+        ;;
 esac
 
 case $BLOCK_BUTTON in
-	1) notify-send "This Month" "$(cal --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" && notify-send "Appointments" "$(calcurse -d3)" ;;
+	1) notify-send "This Month" "$(cal -m --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" && notify-send "Appointments" "$(calcurse -d3)" ;;
 	2) setsid -f "$TERMINAL" -e calcurse ;;
 	3) notify-send "📅 Time/date module" "\- Left click to show upcoming appointments for the next three days via \`calcurse -d3\` and show the month via \`cal\`
 - Middle click opens calcurse if installed" ;;
