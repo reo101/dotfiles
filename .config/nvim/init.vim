@@ -108,6 +108,7 @@ if using_neovim
     if has('nvim-0.5')
         Plug 'nvim-treesitter/nvim-treesitter'          " Treesitter for syntax highlighting
         Plug 'nvim-treesitter/playground'               " Playground for treesitter, used when creating things
+        Plug 'p00f/nvim-ts-rainbow'                     " Rainbow brackets using treesitter
     endif
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'] } " Markdown Live Preview
 endif
