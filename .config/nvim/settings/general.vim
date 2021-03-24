@@ -101,6 +101,10 @@ set wildmode=longest:full,full
 " save as sudo
 ca w!! w !sudo tee "%"
 
+" Map F1 to Esc
+map <F1> <Esc>
+imap <F1> <Esc>
+
 " buffer navigation mappings
 map tt :enew<CR> 
 map <M-Right> :bnext<CR>
