@@ -71,7 +71,7 @@ Plug 'tpope/vim-surround'                           " Text obejcts surrounding T
 Plug 'tpope/vim-repeat'                             " vim-repeat Repeat more complex actions with `.`, used by vim-surround
 Plug 'michaeljsmith/vim-indent-object'              " Indent text object Defines text objects for identetions (Python) TODO learn hotkeys 
 Plug 'jeetsukumaran/vim-indentwise'                 " Indentation based movements Keymaps to jump between indents TODO learn hotkeys
-Plug 'sheerun/vim-polyglot'                         " Vast language syntax highlighting and indentation
+" Plug 'sheerun/vim-polyglot'                         " Vast language syntax highlighting and indentation
 Plug 'mileszs/ack.vim'                              " Ack code search TODO see `:help Ack` 
 Plug 'RRethy/vim-hexokinase'                        " Paint css colors with the real color
 Plug 't9md/vim-choosewin'                           " Window chooser Press `-`* to select vim window to focus TODO learn hotkeys 
@@ -103,6 +103,7 @@ Plug 'tweekmonster/startuptime.vim'                 " Startup time counter (per 
 Plug 'mhinz/vim-startify'                           " Start screen
 Plug 'romainl/vim-cool'                             " :noh after cursor movement
 Plug 'justinmk/vim-sneak'                           " Quick two or one (see config) letter searches
+Plug 'severin-lemaignan/vim-minimap'                " Buffer minimap (like VSCode/Sublime)
 if using_neovim
     Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}} " Async autocompletion
     if has('nvim-0.5')
@@ -160,6 +161,7 @@ source $HOME/.config/nvim/plug-config/tmux.vim          " Tmux
 source $HOME/.config/nvim/plug-config/tmuxline.vim      " Tmux Airline
 source $HOME/.config/nvim/plug-config/startify.vim      " Startify
 source $HOME/.config/nvim/plug-config/sneak.vim         " Sneak
+source $HOME/.config/nvim/plug-config/minimap.vim       " Minimap
 
 " KEYBINDS
 vnoremap <leader>f :fold<CR>

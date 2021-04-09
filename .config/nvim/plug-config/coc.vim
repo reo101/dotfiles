@@ -182,7 +182,6 @@ let g:coc_global_extensions = [
     \ 'coc-vimlsp',
     \ 'coc-tasks',
     \ 'coc-snippets',
-    \ 'coc-prettier',
     \ 'coc-lists',
     \ 'coc-json',
     \ 'coc-highlight',
@@ -192,17 +191,18 @@ let g:coc_global_extensions = [
     \ 'coc-calc',
     \ 'coc-browser',
     \ 'coc-actions',
-    \ 'coc-tsserver',
     \ 'coc-texlab',
     \ 'coc-styled-components',
     \ 'coc-sh',
     \ 'coc-python',
     \ 'coc-java',
     \ 'coc-java-debug',
-    \ 'coc-html',
     \ 'coc-css',
     \ 'coc-cmake'
     \ ]
 
+    " \ 'coc-prettier',
+    " \ 'coc-tsserver',
+    " \ 'coc-html',
     " \ 'coc-java-vimspector',
 
