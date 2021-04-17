@@ -104,7 +104,7 @@ Plug 'tweekmonster/startuptime.vim'                 " Startup time counter (per 
 Plug 'mhinz/vim-startify'                           " Start screen
 Plug 'romainl/vim-cool'                             " :noh after cursor movement
 Plug 'justinmk/vim-sneak'                           " Quick two or one (see config) letter searches
-Plug 'severin-lemaignan/vim-minimap'                " Buffer minimap (like VSCode/Sublime)
+" Plug 'severin-lemaignan/vim-minimap'                " Buffer minimap (like VSCode/Sublime)
 if using_neovim
     Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}} " Async autocompletion
     if has('nvim-0.5')
@@ -162,7 +162,7 @@ source $HOME/.config/nvim/plug-config/tmux.vim          " Tmux
 source $HOME/.config/nvim/plug-config/tmuxline.vim      " Tmux Airline
 source $HOME/.config/nvim/plug-config/startify.vim      " Startify
 source $HOME/.config/nvim/plug-config/sneak.vim         " Sneak
-source $HOME/.config/nvim/plug-config/minimap.vim       " Minimap
+" source $HOME/.config/nvim/plug-config/minimap.vim       " Minimap
 
 " KEYBINDS
 vnoremap <leader>f :fold<CR>
