@@ -77,9 +77,10 @@ Plug 'RRethy/vim-hexokinase'                        " Paint css colors with the 
 Plug 't9md/vim-choosewin'                           " Window chooser Press `-`* to select vim window to focus TODO learn hotkeys 
 Plug 'valloric/MatchTagAlways'                      " Highlight matching html tags
 Plug 'mattn/emmet-vim'                              " Generate html in a simple way TODO learn syntax 
-Plug 'tpope/vim-fugitive'                           " Git integration
-Plug 'tpope/vim-rhubarb'                            " :GBrowse for GitHub
-Plug 'shumphrey/fugitive-gitlab.vim'                " :GBrowse ofr GitLab
+" Plug 'tpope/vim-fugitive'                           " Git integration
+" Plug 'tpope/vim-rhubarb'                            " :GBrowse for GitHub
+" Plug 'shumphrey/fugitive-gitlab.vim'                " :GBrowse ofr GitLab
+Plug 'jreybert/vimagit'                             " Git integration
 Plug 'mhinz/vim-signify'                            " Git (and other) diff icons on the side of the file lines
 Plug 'neomake/neomake'                              " Automated and better `:make` TODO see `:help neomake.txt`
 Plug 'ryanoasis/vim-devicons'                       " Nice icons in the file explorer and file type status line.
