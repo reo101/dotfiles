@@ -105,6 +105,7 @@ Plug 'mhinz/vim-startify'                           " Start screen
 Plug 'romainl/vim-cool'                             " :noh after cursor movement
 Plug 'justinmk/vim-sneak'                           " Quick two or one (see config) letter searches
 " Plug 'severin-lemaignan/vim-minimap'                " Buffer minimap (like VSCode/Sublime)
+Plug 'editorconfig/editorconfig-vim'                " Support for .editorconfig
 if using_neovim
     Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}} " Async autocompletion
     if has('nvim-0.5')
