@@ -72,3 +72,5 @@
 (package! beacon
   :recipe (:host github :repo "Malabarba/beacon"
            :files ("beacon.el")))
+(package! tree-sitter)
+(package! tree-sitter-langs)

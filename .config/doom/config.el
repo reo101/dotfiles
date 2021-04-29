@@ -52,3 +52,22 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(use-package! tree-sitter
+  :config
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+  (pushnew! tree-sitter-major-mode-language-alist
+            '(scss-mode . css)))
+
+;; (use-package! lsp-mode
+;;   :hook ((prog-mode . lsp-deferred))
+;;   :commands (lsp lsd-deferred)
+;;   :config
+;;   (progn
+;;     (lsp-register-client
+;;      (make-lsp-client :new-connection (lsp-tramp-connection "clangd")
+;;                       :major-modes '(c-mode c++-mode)
+;;                       :remote? t
+;;                       :server-id 'clangd-remote))))
