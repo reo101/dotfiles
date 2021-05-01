@@ -1,4 +1,4 @@
-;; -*- no-byte-compile: t; -*-
+; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
 
 ;; To install a package with Doom you must declare them here and run 'doom sync'
@@ -60,10 +60,8 @@
 (package! evil-tutor)
 (package! hyperbole)
 (package! ivy-posframe)
-(package! org-bullets)
 (package! peep-dired)
 (package! pianobar)
-(package! rainbow-mode)
 (package! resize-window)
 (package! tldr)
 (package! wc-mode)
@@ -74,3 +72,13 @@
            :files ("beacon.el")))
 (package! tree-sitter)
 (package! tree-sitter-langs)
+(package! lsp-mode)
+(package! lsp-ui)
+(package! lsp-origami)
+(package! lsp-ivy)
+(package! lsp-treemacs)
+(package! dap-mode)
+(package! diminish)
+(package! org-bullets)
+(package! rainbow-mode)
+(package! org-super-agenda)
