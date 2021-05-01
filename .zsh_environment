@@ -1,5 +1,6 @@
 export PATH="$HOME/.local/bin:$HOME/.local/bin/statusbar:$HOME/.local/bin/cron:$PATH"
 export PATH="$PATH:/opt/texlive/2020/bin/x86_64-linux"
+export PATH="$PATH:$HOME/.emacs.d/bin"
 export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
 export PATH="$PATH:$GEM_HOME/bin"
 export TERMINAL="st"
