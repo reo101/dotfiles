@@ -74,7 +74,7 @@
 (package! tree-sitter-langs)
 (package! lsp-mode)
 (package! lsp-ui)
-(package! lsp-origami)
+; (package! lsp-origami)
 (package! lsp-ivy)
 (package! lsp-treemacs)
 (package! dap-mode)
@@ -82,3 +82,8 @@
 (package! org-bullets)
 (package! rainbow-mode)
 (package! org-super-agenda)
+(package! company-box)
+(package! lsp-haskell)
+;; (package! org-wc
+;;   :recipe (:host github :repo "tesujimath/org-wc"
+;;            :files ("org-wc.el")))

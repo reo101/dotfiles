@@ -26,7 +26,7 @@
 ;; There are two ways to load a theme. Both asume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'doom-molokai)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -85,23 +85,99 @@
   (org-hide-emphasis-markers t)
   (org-src-window-setup 'current-window))
 
+;; (defun reo101/org-mode-visual-fill ()
+;;  (setq visual-fill-column-width 125
+;;        visual-fill-column-center-text t)
+;;  (visual-fill-column-mode 1))
+;;
+;; (use-package! visual-fill-column
+;;   :diminish visual-line-mode
+;;   :hook (org-mode . reo101/org-mode-visual-fill))
+
+(defun reo101/org-mode-big-headings ()
+  (dolist (face '((org-level-1 . 1.4)
+              (org-level-2 . 1.35)
+              (org-level-3 . 1.30)
+              (org-level-4 . 1.25)
+              (org-level-5 . 1.20)
+              (org-level-6 . 1.15)
+              (org-level-7 . 1.10)
+              (org-level-8 . 1.05)))
+  (set-face-attribute (car face) nil ;; :font "Cantarell"
+                      :weight 'regular :height (cdr face))))
+
+(use-package! org-faces
+  :hook (org-mode . reo101/org-mode-big-headings))
+
 (use-package! org-bullets
   :hook (org-mode . org-bullets-mode)
   :custom (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
+;; (setq
+;;     org-superstar-headline-bullets-list '("◉" "○" "●" "○" "●" "○" "●")
+;; )
+
+(defun reo101/org-mode-checkbox-todo ()
+  "Switch header TODO state to DONE when all checkboxes are ticked, to TODO otherwise"
+  (let ((todo-state (org-get-todo-state)) beg end)
+    (unless (not todo-state)
+      (save-excursion
+    (org-back-to-heading t)
+    (setq beg (point))
+    (end-of-line)
+    (setq end (point))
+    (goto-char beg)
+    (if (re-search-forward "\\[\\([0-9]*%\\)\\]\\|\\[\\([0-9]*\\)/\\([0-9]*\\)\\]"
+                   end t)
+        (if (match-end 1)
+        (if (equal (match-string 1) "100%")
+            (unless (string-equal todo-state "DONE")
+              (org-todo 'done))
+          (unless (string-equal todo-state "TODO")
+                (org-todo 'todo)))
+          (if (and (> (match-end 2) (match-beginning 2))
+               (equal (match-string 2) (match-string 3)))
+          (unless (string-equal todo-state "DONE")
+            (org-todo 'done))
+        (unless (string-equal todo-state "TODO")
+          (org-todo 'todo)))))))))
+
+(add-hook 'org-checkbox-statistics-hook 'reo101/org-checkbox-todo)
+
 (font-lock-add-keywords 'org-mode
-	  '(("^ *\\([-]\\) "
-	     (0 (prog1 () (compose-region (match-beginning 1)
+            '(("^ *\\([-]\\) "
+               (0 (prog1 () (compose-region (match-beginning 1)
                                           (match-end 1) "•"))))))
 
-(defun reo101/org-mode-visual-fill ()
-  (setq visual-fill-column-width 125
-        visual-fill-column-center-text t)
-  (visual-fill-column-mode 1))
+(setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
+                                       ("#+END_SRC" . "†")
+                                       ("#+begin_src" . "†")
+                                       ("#+end_src" . "†")
+                                       (">=" . "≥")
+                                       ("=>" . "⇨")))
+(setq prettify-symbols-unprettify-at-point 'right-edge)
+(add-hook 'org-mode-hook 'prettify-symbols-mode)
 
-(use-package! visual-fill-column
-  :diminish visual-line-mode
-  :hook (org-mode . reo101/org-mode-visual-fill))
+(set-frame-parameter (selected-frame) 'alpha '(95 . 85))
+(add-to-list 'default-frame-alist '(alpha . (95 . 85)))
+
+(add-hook 'activate-mark-hook 'rainbow-delimiters-mode-disable)
+(add-hook 'deactivate-mark-hook 'rainbow-delimiters-mode-enable)
+
+(defun reo101/org-mode-show-current-heading-tidily ()
+  (interactive)
+  "Show next entry, keeping other entries closed."
+  (if (save-excursion (end-of-line) (outline-invisible-p))
+      (progn (org-show-entry) (show-children))
+    (outline-back-to-heading)
+    (unless (and (bolp) (org-on-heading-p))
+      (org-up-heading-safe)
+      (hide-subtree)
+      (error "Boundary reached"))
+    (org-overview)
+    (org-reveal t)
+    (org-show-entry)
+    (show-children)))
 
 (use-package! highlight-indent-guides
   :commands highlight-indent-guides-mode
@@ -112,6 +188,24 @@
         highlight-indent-guides-delay 0.01
         highlight-indent-guides-responsive 'top
         highlight-indent-guides-auto-enabled nil)) ;nil
+
+(use-package! wc-mode
+  :hook (org-mode . wc-mode)
+  :config
+  (setq wc-modeline-format "[Words: %tw, Chars: %tc]"))
+
+;; (map! :leader
+;;       (:prefix-map ("b" . "buffer")
+;;        (:prefix ("j" . "journal")
+;;         :desc "New journal entry" "j" #'org-journal-new-entry
+;;         :desc "Search journal entry" "s" #'org-journal-search)))
+
+(map! :leader
+      (:prefix-map ("b" . "buffer")
+       (:prefix ("w" . "words")
+        :desc "Word count (words and characters)" "a" #'wc-count)))
+
+; Spc-b-w
 
 ;; (use-package! lsp-mode
 ;;   :hook ((prog-mode . lsp-deferred))
@@ -148,6 +242,12 @@
   (lsp-mode . reo101/lsp-mode-setup)
   (lsp-mode . lsp-enable-which-key-integration))
 
+(require 'lsp)
+(require 'lsp-haskell)
+;; Hooks so haskell and literate haskell major modes trigger LSP setup
+(add-hook 'haskell-mode-hook #'lsp)
+(add-hook 'haskell-literate-mode-hook #'lsp)
+
 (use-package! lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
   :commands lsp-ui
@@ -156,10 +256,10 @@
   (lsp-ui-doc-enable t)
   (lsp-ui-doc-position 'bottom))
 
-(use-package! lsp-origami
-  :hook
-  (erlang-mode . origami-mode)
-  (origami-mode . lsp-origami-mode))
+;; (use-package! lsp-origami
+;;   :hook
+;;   (erlang-mode . origami-mode)
+;;   (origami-mode . lsp-origami-mode))
 
 (use-package! lsp-ivy :commands lsp-ivy-workspace-symbol)
 
@@ -192,9 +292,9 @@
               ("C-p" . company-select-previous))
   :hook (lsp-mode . company-mode))
 
-;; (use-package! company-box
-;;   :diminish
-;;   :hook (company-mode . company-box-mode))
+(use-package! company-box
+  :diminish
+  :hook (company-mode . company-box-mode))
 
 ; (defvar my-term-shell "/bin/zsh")
 ; (defadvice ansi-term (before force-bash)
