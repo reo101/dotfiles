@@ -74,6 +74,32 @@
   (pushnew! tree-sitter-major-mode-language-alist
             '(scss-mode . css)))
 
+;; prepare the arguments
+(setq dotfiles-git-dir (concat "--git-dir=" (expand-file-name "~/dotfiles")))
+(setq dotfiles-work-tree (concat "--work-tree=" (expand-file-name "~")))
+
+;; function to start magit on dotfiles
+(defun dotfiles-magit-status ()
+  (interactive)
+  (add-to-list 'magit-git-global-arguments dotfiles-git-dir)
+  (add-to-list 'magit-git-global-arguments dotfiles-work-tree)
+  (call-interactively 'magit-status))
+(map! :leader
+       (:prefix ("g" . "git")
+        :desc "Dotfiles status" "d" #'dotfiles-magit-status))
+
+;; wrapper to remove additional args before starting magit
+(defun magit-status-with-removed-dotfiles-args ()
+  (interactive)
+  (setq magit-git-global-arguments (remove dotfiles-git-dir magit-git-global-arguments))
+  (setq magit-git-global-arguments (remove dotfiles-work-tree magit-git-global-arguments))
+  (call-interactively 'magit-status))
+;; redirect global magit hotkey to our wrapper
+(map! :leader
+       (:prefix ("g" . "git")
+        :desc "Magit status" "g" #'magit-status-with-removed-dotfiles-args))
+
+
 (defun reo101/org-mode-setup ()
   (org-indent-mode)
   (visual-line-mode 1))
