@@ -187,6 +187,21 @@
 (set-frame-parameter (selected-frame) 'alpha '(95 . 85))
 (add-to-list 'default-frame-alist '(alpha . (95 . 85)))
 
+(defun reo101/toggle-transparency ()
+(interactive)
+(let ((alpha (frame-parameter nil 'alpha)))
+    (set-frame-parameter
+    nil 'alpha
+    (if (eql (cond ((numberp alpha) alpha)
+                    ((numberp (cdr alpha)) (cdr alpha))
+                    ;; Also handle undocumented (<active> <inactive>) form.
+                    ((numberp (cadr alpha)) (cadr alpha)))
+            100)
+        '(95 . 85) '(100 . 100)))))
+(map! :leader
+       (:prefix ("t" . "toggle")
+        :desc "Transparency" "t" #'reo101/toggle-transparency))
+
 (add-hook 'activate-mark-hook 'rainbow-delimiters-mode-disable)
 (add-hook 'deactivate-mark-hook 'rainbow-delimiters-mode-enable)
 
