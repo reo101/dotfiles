@@ -81,6 +81,7 @@
   scroll-preserve-screen-position 1)
 
 ;; prepare the arguments
+(setq auth-sources '("~/.authinfo.gpg"))
 (setq dotfiles-git-dir (concat "--git-dir=" (expand-file-name "~/dotfiles")))
 (setq dotfiles-work-tree (concat "--work-tree=" (expand-file-name "~")))
 
