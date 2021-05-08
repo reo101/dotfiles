@@ -1,6 +1,8 @@
 alias vim="nvim"
 alias vi="nvim"
 alias sv="sudo nvim"
+alias emd="emacs --daemon"
+alias em="emacsclient -s $PREFIX/var/run/emacs*/server -c"
 alias vimb="vimb ~/Projects/Home/Website/index.html"
 alias lls="logo-ls"
 # alias lc="colorls"
