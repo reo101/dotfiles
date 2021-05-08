@@ -1,0 +1,94 @@
+# Inserts a blank line between shell prompts
+add_newline = true
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character]                            # The name of the module we are configuring is "character"
+success_symbol = "[👉](bold green)"
+# The "success_symbol" segment is being
+# set to "➜" with the color "bold green"
+
+# Disable the package module, hiding it from the prompt completely
+# [package]
+# disabled = true
+
+# # Use custom format
+# format = """
+# [┌───────────────────>](bold green)
+# [│](bold green)$time$directory$package
+# [└─>](bold green) """
+
+
+[git_branch]
+symbol = "🌱 "
+truncation_length = 4
+truncation_symbol = ""
+
+[git_commit]
+commit_hash_length = 4
+tag_symbol = "🔖 "
+
+[git_state]
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+cherry_pick = "[🍒 PICKING](bold red)"
+
+[git_status]
+conflicted = "🏳"
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵"
+untracked = "🤷‍"
+stashed = "📦"
+modified = "📝"
+staged = '[++\($count\)](green)'
+renamed = "👅"
+deleted = "🗑"
+
+[status]
+style = "bg:grey"
+symbol = "🔴"
+format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false
+
+[time]
+disabled = false
+format = '🕙[\[ $time \]]($style) '
+time_format = "%T"
+utc_time_offset = "+2"
+# time_range = "10:00:00-14:00:00"
+
+[username]
+style_user = "fg:#CC99CC"
+style_root = "white"
+format = " [$user]($style)[@](bold yellow)"
+disabled = false
+show_always = true
+
+[hostname]
+ssh_only = false
+format =  "[$hostname](bold fg:#CC59B0): "
+disabled = false
+
+# [username]
+# style_user = "white bold"
+# style_root = "black bold"
+# format = "user: [$user]($style) "
+# disabled = false
+
+# show_always = true
+[directory]
+read_only = "🔒"
+read_only_style= "bold white"
+style = "fg:#A7F3E4"
+
+# Language Environments
+[package]
+style = "bold fg:#5E5E5E"
+
+[python]
+style = "bold fg:#5E5E5E"
+symbol = "[](bold yellow) "
+
+[nodejs]
+style = "bold fg:#5E5E5E"
+symbol = "[⬢](bold green) "
