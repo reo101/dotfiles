@@ -107,6 +107,8 @@
         :desc "Magit status" "g" #'magit-status-with-removed-dotfiles-args))
 
 
+(global-wakatime-mode)
+
 (defun reo101/org-mode-setup ()
   (org-indent-mode)
   (visual-line-mode 1))

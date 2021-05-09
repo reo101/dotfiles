@@ -87,3 +87,4 @@
 ;; (package! org-wc
 ;;   :recipe (:host github :repo "tesujimath/org-wc"
 ;;            :files ("org-wc.el")))
+(package! wakatime-mode)
