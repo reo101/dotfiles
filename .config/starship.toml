@@ -1,30 +1,30 @@
+# Use custom format
+format = """
+[┌───────────────────>](bold green)\
+$username$hostname$git_branch$git_status$git_state$git_commit
+[│](bold green)\
+$time$cmd_duration: $directory$package
+[└─](bold green)\
+$character"""
+
+
 # Inserts a blank line between shell prompts
 add_newline = true
 
 # Replace the "❯" symbol in the prompt with "➜"
-[character]                            # The name of the module we are configuring is "character"
+[character]
 success_symbol = "[👉](bold green)"
+error_symbol = "[🚫](red)"
 # The "success_symbol" segment is being
 # set to "➜" with the color "bold green"
 
-# Disable the package module, hiding it from the prompt completely
-# [package]
-# disabled = true
-
-# # Use custom format
-# format = """
-# [┌───────────────────>](bold green)
-# [│](bold green)$time$directory$package
-# [└─>](bold green) """
-
-
 [git_branch]
 symbol = "🌱 "
-truncation_length = 4
+truncation_length = 7
 truncation_symbol = ""
 
 [git_commit]
-commit_hash_length = 4
+commit_hash_length = 6
 tag_symbol = "🔖 "
 
 [git_state]
@@ -57,29 +57,52 @@ time_format = "%T"
 utc_time_offset = "+3"
 # time_range = "10:00:00-14:00:00"
 
-[username]
-style_user = "fg:#CC99CC"
-style_root = "white"
-format = " [$user]($style)[@](bold yellow)"
-disabled = false
-show_always = true
+[cmd_duration]
+min_time = 2000 # miliseconds
+show_notifications = true
+min_time_to_notify = 45000 # miliseconds
+format = "took [$duration](bold yellow)"
+
+# [username]
+# style_user = "fg:#CC99CC"
+# style_root = "white"
+# format = " [$user]($style)[@](bold yellow)"
+# disabled = false
+# show_always = true
 
 [hostname]
 ssh_only = false
-format =  "[$hostname](bold fg:#CC59B0): "
+format =  "[$hostname](bold fg:#CC59B0) "
 disabled = false
 
-# [username]
-# style_user = "white bold"
-# style_root = "black bold"
-# format = "user: [$user]($style) "
-# disabled = false
-
+[username]
+style_user = "white bold"
+style_root = "black bold"
+format = "user: [$user]($style) "
+disabled = false
 # show_always = true
+
 [directory]
 read_only = "🔒"
 read_only_style= "bold white"
 style = "fg:#A7F3E4"
+truncate_to_repo = false
+truncation_length = 5
+truncation_symbol = "…/"
+home_symbol = "🏡"
+format = "[$read_only]($read_only_style)[$path]($style) "
+
+[directory.substitutions]
+".config" = " "
+"nvim" = ""
+"emacs" = "𝓔"
+"doom" = "𝓔"
+"Projects" = "💻"
+"FMI" = "🏫"
+"Home" = "🏠"
+"CPP" = ""
+"Java" = ""
+"Python" = ""
 
 # Language Environments
 [package]
