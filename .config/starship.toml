@@ -1,10 +1,17 @@
 # Use custom format
 format = """
-[┌───────────────────>](bold green)\
-$username$hostname$git_branch$git_status$git_state$git_commit
+[╭───────┨](bold green)\
+${custom.local}\
+${custom.local_root}\
+${custom.ssh}\
+${custom.ssh_root}\
+$hostname\
+[┠───────>](bold green)\
+$status$cmd_duration\
+$git_branch$git_status$git_state$git_commit
 [│](bold green)\
-$time$cmd_duration: $directory$package
-[└─](bold green)\
+$time$jobs: $directory$package
+[╰─](bold green)\
 $character"""
 
 
@@ -63,24 +70,17 @@ show_notifications = true
 min_time_to_notify = 45000 # miliseconds
 format = "took [$duration](bold yellow)"
 
-# [username]
-# style_user = "fg:#CC99CC"
-# style_root = "white"
-# format = " [$user]($style)[@](bold yellow)"
-# disabled = false
-# show_always = true
-
 [hostname]
 ssh_only = false
-format =  "[$hostname](bold fg:#CC59B0) "
+format =  "[$hostname](bold fg:#CC59B0)"
 disabled = false
 
 [username]
-style_user = "white bold"
-style_root = "black bold"
-format = "user: [$user]($style) "
 disabled = false
-# show_always = true
+style_user = "white bold"
+style_root = "red bold"
+format = "[$user]($style)[@](bold yellow)"
+show_always = true
 
 [directory]
 read_only = "🔒"
@@ -115,3 +115,42 @@ symbol = "[](bold yellow) "
 [nodejs]
 style = "bold fg:#5E5E5E"
 symbol = "[⬢](bold green) "
+
+# Custom
+[jobs]
+format = "[ $symbol$number ]($style)"
+style = "bg:#587744 fg:bright-white"
+symbol = "⚙"
+
+[custom.local]
+shell = ["zsh", "-d", "-f"]
+when = '[[ -z "$SSH_CLIENT" ]] && [[ `whoami` != "root" ]]'
+format = "[$symbol$output]($style)[@](bold yellow)"
+command = "whoami"
+style = "fg:bright-white"
+symbol = ""
+
+[custom.local_root]
+shell = ["zsh", "-d", "-f"]
+when = '[[ -z "$SSH_CLIENT" ]] && [[ `whoami` == "root" ]]'
+format = "[ $output ]($style)[@](bold yellow)"
+command = "whoami"
+style = "bg:red fg:bright-white"
+
+[custom.ssh]
+shell = ["zsh", "-d", "-f"]
+when = '[[ -n "$SSH_CLIENT" ]] && [[ `whoami` != "root" ]]'
+format = "[ $symbol$output ]($style)[@](bold yellow)"
+command = "whoami"
+style = "bg:blue fg:bright-white"
+# style = "bg:#FD7208 fg:bright-white"
+symbol = "⌁"
+
+[custom.ssh_root]
+shell = ["zsh", "-d", "-f"]
+when = '[[ -n "$SSH_CLIENT" ]] && [[ `whoami` == "root" ]]'
+format = "[ $symbol$output ]($style)[@](bold yellow)"
+command = "whoami"
+style = "bg:red fg:bright-white"
+symbol = "⌁"
+
