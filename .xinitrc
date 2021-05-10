@@ -24,22 +24,15 @@ clipmenud &
 
 xset r rate 300 50 &
 
-#if [[ -z "$DISPLAY" ]]; then
-#    if [[ $(tty) = /dev/tty1 ]]; then
-#        exec dwm
-#    elif [[ $(tty) = /dev/tty2 ]]; then
-#        exec bspwm
-#    el then
-#        echo "No WM fo you bud"
-#    fi
-#fi
-
-#while true; do
-#    dwm >/dev/null 2>&1
-#    dwmblocks &
-#done
+emacs --daemon &
 
 xmodmap -e "keycode 94 = backslash"
+xmodmap -e "clear Lock" -e "keycode 0x42 = Escape"
 
-dwmblocks &
-exec dwm
+### WM/DE
+
+case $(tty | cut -b9-) in
+	(1) exec dwm            ;;
+	(2) exec xmonad         ;;
+	(3) exec bspwm          ;;
+esac
