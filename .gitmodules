@@ -7,3 +7,12 @@
 [submodule ".local/src/wal-discord"]
 	path = .local/src/wal-discord
 	url = https://github.com/guglicap/wal-discord
+[submodule ".config/zsh/fast-syntax-highlighting"]
+	path = .config/zsh/fast-syntax-highlighting
+	url = git@github.com:zdharma/fast-syntax-highlighting.git
+[submodule ".config/zsh/zsh-autosuggestions"]
+	path = .config/zsh/zsh-autosuggestions
+	url = git@github.com:zsh-users/zsh-autosuggestions.git
+[submodule ".fzf"]
+	path = .fzf
+	url = git@github.com:reo101/dotfiles.git
