@@ -76,7 +76,7 @@ utc_time_offset = "+3"
 min_time = 2000 # miliseconds
 # show_notifications = true
 min_time_to_notify = 45000 # miliseconds
-format = "took [$duration](bold yellow)"
+format = "took [$duration](bold yellow) "
 
 [hostname]
 ssh_only = false
