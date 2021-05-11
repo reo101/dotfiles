@@ -13,6 +13,6 @@
 [submodule ".config/zsh/zsh-autosuggestions"]
 	path = .config/zsh/zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
-[submodule ".fzf"]
-	path = .fzf
-	url = git@github.com:reo101/dotfiles.git
+[submodule ".config/zsh/fzf"]
+	path = .config/zsh/fzf
+	url = git@github.com:junegunn/fzf.git
