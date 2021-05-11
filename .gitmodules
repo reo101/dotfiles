@@ -4,30 +4,6 @@
 [submodule ".local/src/mpd-rich-presence-discord"]
 	path = .local/src/mpd-rich-presence-discord
 	url = https://www.github.com/justas-d/mpd-rich-presence-discord
-[submodule ".local/src/dwm"]
-	path = .local/src/dwm
-	url = https://www.github.com/reo101/dwm
-[submodule ".local/src/dwmblocks"]
-	path = .local/src/dwmblocks
-	url = https://www.github.com/reo101/dwmblocks
-[submodule ".local/src/st"]
-	path = .local/src/st
-	url = https://www.github.com/reo101/st
-[submodule ".local/src/dmenu"]
-	path = .local/src/dmenu
-	url = https://www.github.com/reo101/dmenu
 [submodule ".local/src/wal-discord"]
 	path = .local/src/wal-discord
 	url = https://github.com/guglicap/wal-discord
-[submodule ".oh-my-zsh/custom/themes/powerlevel10k"]
-	path = .oh-my-zsh/custom/themes/powerlevel10k
-	url = https://github.com/romkatv/powerlevel10k.git
-[submodule ".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
-	path = .oh-my-zsh/custom/plugins/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions.git
-[submodule ".oh-my-zsh/custom/plugins/zsh-autocomplete"]
-	path = .oh-my-zsh/custom/plugins/zsh-autocomplete
-	url = https://github.com/marlonrichert/zsh-autocomplete.git
-[submodule ".oh-my-zsh/custom/plugins/fast-syntax-highlighting"]
-	path = .oh-my-zsh/custom/plugins/fast-syntax-highlighting
-	url = https://github.com/zdharma/fast-syntax-highlighting
