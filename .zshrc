@@ -3,8 +3,6 @@ bindkey -v
 # git@github.com:zdharma/fast-syntax-highlighting.git
 syntaxhl="$HOME/.config/zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 
-fzf="$HOME/.fzf.zsh"
-
 # wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/lib/completion.zsh
 completion="$HOME/.config/zsh/completion.zsh"
 
@@ -17,10 +15,11 @@ cmdhistory="$HOME/.config/zsh/history.zsh"
 # wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/lib/key-bindings.zsh
 bindings="$HOME/.config/zsh/key-bindings.zsh"
 
+fzf="$HOME/.config/zsh/.fzf.zsh"
+
 ##################################################
 
 [ -f "$syntaxhl" ] && source "$syntaxhl"
-[ -f "$fzf" ] && source "$fzf"
 if [ -f "$completion" ]; then
 
     source "$completion"
@@ -43,6 +42,7 @@ fi
 [ -f "$suggestions" ] && source "$suggestions"
 [ -f "$cmdhistory" ] && source "$cmdhistory"
 [ -f "$bindings" ] && source "$bindings"
+[ -f "$fzf" ] && source "$fzf"
 
 source ~/.aliases
 eval "$(starship init zsh)"
