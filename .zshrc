@@ -44,5 +44,16 @@ fi
 [ -f "$bindings" ] && source "$bindings"
 [ -f "$fzf" ] && source "$fzf"
 
+##################################################
+
+unset syntaxhl
+unset completion
+unset suggestions
+unset cmdhistory
+unset bindings
+unset fzf
+
+##################################################
+
 source ~/.aliases
 eval "$(starship init zsh)"
