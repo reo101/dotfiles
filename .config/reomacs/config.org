@@ -1,0 +1,158 @@
+* Package setup
+** Package Repos
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+#+END_SRC
+
+** use-package
+
+#+BEGIN_SRC emacs-lisp
+;; Initialize use-package on non-Linux platforms
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
+#+END_SRC
+
+* Evil Mode
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil
+  :init      ;; tweak evil's configuration before loading it
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  (setq evil-vsplit-window-right t)
+  (setq evil-split-window-below t)
+  (evil-mode))
+(use-package evil-collection
+  :after evil
+  :config
+  (setq evil-collection-mode-list '(dashboard dired ibuffer))
+  (evil-collection-init))
+(use-package evil-tutor)
+#+END_SRC
+
+* GRAPHICAL USER INTERFACE TWEAKS
+Let's make GNU Emacs look a little better.
+
+** Disable Menubar, Toolbars and Scrollbars
+#+BEGIN_SRC emacs-lisp
+(if (display-graphic-p)
+    (progn
+      (menu-bar-mode -1)
+      (tool-bar-mode -1)
+      (scroll-bar-mode -1)))
+#+END_SRC
+
+** Display Line Numbers and Truncated Lines
+#+BEGIN_SRC emacs-lisp
+(global-display-line-numbers-mode 1)
+(global-visual-line-mode t)
+#+END_SRC
+
+** Themes
+
+#+begin_src emacs-lisp
+(use-package doom-themes
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
+  (doom-themes-treemacs-config)
+
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+#+end_src
+
+** Change Modeline To Doom's Modeline
+#+BEGIN_SRC emacs-lisp
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+#+END_SRC
+
+** General Keybindings
+
+#+BEGIN_SRC emacs-lisp
+(use-package general
+  :config
+  (general-evil-setup t))
+#+END_SRC
+
+** ALL THE ICONS
+
+#+BEGIN_SRC emacs-lisp
+(use-package all-the-icons)
+#+END_SRC
+
+* EMOJIS
+Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :). 
+
+#+BEGIN_SRC emacs-lisp
+(use-package emojify
+  :hook (after-init . global-emojify-mode))
+#+END_SRC
+
+* IVY (COUNSEL/SWIPER)
+Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich allows us to add descriptions alongside the commands in M-x.
+
+** Installing Ivy And Basic Setup
+#+BEGIN_SRC emacs-lisp
+(use-package counsel
+  :after ivy
+  :config (counsel-mode))
+(use-package ivy
+  :defer 0.1
+  :diminish
+  :bind
+  (("C-c C-r" . ivy-resume)
+   ("C-x B" . ivy-switch-buffer-other-window))
+  :custom
+  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  :config
+  (ivy-mode))
+(use-package ivy-rich
+  :after ivy
+  :custom
+  (ivy-virtual-abbreviate 'full
+   ivy-rich-switch-buffer-align-virtual-buffer t
+   ivy-rich-path-style 'abbrev)
+  :config
+  (ivy-set-display-transformer 'ivy-switch-buffer
+                               'ivy-rich-switch-buffer-transformer)
+  (ivy-rich-mode 1)) ;; this gets us descriptions in M-x.
+(use-package swiper
+  :after ivy
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper)))
+#+END_SRC
+
+** Making M-x Great Again!
+The following line removes the annoying '^' in things like counsel-M-x and other ivy/counsel prompts.  The default '^' string means that if you type something immediately after this string only completion candidates that begin with what you typed are shown.  Most of the time, I'm searching for a command without knowing what it begins with though.
+
+#+BEGIN_SRC emacs-lisp
+(setq ivy-initial-inputs-alist nil)
+#+END_SRC
+
+Smex is a package the makes M-x remember our history.  Now M-x will show our last used commands first.
+#+BEGIN_SRC emacs-lisp
+(use-package smex)
+(smex-initialize)
+#+END_SRC
