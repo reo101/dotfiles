@@ -29,16 +29,48 @@
    
 ** TODO straight.el
 * Evil Mode
-** Package
+
+** Custom hook (unused)
+
+#+BEGIN_SRC emacs-lisp
+  ;; (defun reo101/evil-hook ()
+  ;;   (dolist (mode '(custom-mode
+  ;;                   eshell-mode
+  ;;                   git-rebase-mode
+  ;;                   erc-mode
+  ;;                   circe-server-mode
+  ;;                   circe-chat-mode
+  ;;                   circe-query-mode
+  ;;                   sauron-mode
+  ;;                   term-mode))
+  ;;     (add-to-list 'evil-emacs-state-modes mode)))
+#+END_SRC
+
+** Package and init -want's
 
 #+BEGIN_SRC emacs-lisp
   (use-package evil
     :init      ;; tweak evil's configuration before loading it
     (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
     (setq evil-want-keybinding nil)
+    (setq evil-want-C-u-scroll t)
+    (setq evil-want-C-d-scroll t)
+    (setq evil-want-C-o-jump t)
+    (setq evil-want-C-i-jump t)
     (setq evil-vsplit-window-right t)
     (setq evil-split-window-below t)
-    (evil-mode))
+    (setq evil-undo-system 'undo-tree)
+    ;; :hook (evil-mode . reo101/evil-hook)
+    :config
+    (evil-mode 1)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+
+    ;; Use visual line motions outside of visual-line-mode buffers
+    (evil-global-set-key 'motion "j" 'evil-next-visual-line) ;; FIXME
+    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+    (evil-set-initial-state 'messages-buffer-mode 'normal)
+    (evil-set-initial-state 'dashboard-mode 'normal))
 #+END_SRC
   
 ** Evil-collection
@@ -59,10 +91,43 @@ Vimtutor but for Evil
   (use-package evil-tutor)
 #+END_SRC
 
+* Keybinds
+** Keybindings by General
+
+#+BEGIN_SRC emacs-lisp
+  (use-package general
+    :config
+    (general-create-definer reo101/leader-keys
+      :keymaps '(normal insert visual emacs)
+      :prefix "SPC"
+      :global-prefix "C-SPC")
+
+    (reo101/leader-keys
+      "t"  '(:ignore t :which-key "Toggle")
+      "tt" '(reo101/toggle-transparency :which-key "Transparency")
+      "c" '(:ignore c :which-key "Choose")
+      "ct" '(counsel-load-theme :which-key "Theme")))
+#+END_SRC
+    
 ** Set Escape as *global* escape
    
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+#+END_SRC
+
+* Hydra
+
+#+BEGIN_SRC emacs-lisp
+  (use-package hydra)
+
+  (defhydra hydra-text-scale (:timeout 4)
+    "scale text"
+    ("j" text-scale-increase "in")
+    ("k" text-scale-decrease "out")
+    ("f" nil "finished" :exit t))
+
+  (reo101/leader-keys
+    "ts" '(hydra-text-scale/body :which-key "scale text"))
 #+END_SRC
 
 * GUI Tweaks
@@ -98,6 +163,13 @@ Let's make GNU Emacs look a little better.
 #+BEGIN_SRC emacs-lisp
   (global-display-line-numbers-mode 1)
   (global-visual-line-mode t)
+
+  ;; Disable line numbers for some modes
+  (dolist (mode '(org-mode-hook
+                  term-mode-hook
+                  shell-mode-hook
+                  eshell-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 0))))
 #+END_SRC
 
 ** Transparency (with toggle)
@@ -150,14 +222,6 @@ Let's make GNU Emacs look a little better.
     :init (doom-modeline-mode 1))
 #+END_SRC
 
-** Keybindings by General
-
-#+BEGIN_SRC emacs-lisp
-  (use-package general
-    :config
-    (general-evil-setup t))
-#+END_SRC
-
 ** ALL THE ICONS
 
 #+BEGIN_SRC emacs-lisp
@@ -175,13 +239,13 @@ Let's make GNU Emacs look a little better.
 
 #+BEGIN_SRC emacs-lisp
   (setq auth-sources '("~/.authinfo.gpg"))
-  (setq dotfiles-git-dir (concat "--git-dir=" (expand-file-name "~/dotfiles")))
-  (setq dotfiles-work-tree (concat "--work-tree=" (expand-file-name "~")))
 #+END_SRC
 
 ** Dotfiles wrapper for magit status
 
 #+BEGIN_SRC emacs-lisp
+  (setq dotfiles-git-dir (concat "--git-dir=" (expand-file-name "~/dotfiles")))
+  (setq dotfiles-work-tree (concat "--work-tree=" (expand-file-name "~")))
   ;; function to start magit on dotfiles
   (defun dotfiles-magit-status ()
     (interactive)
@@ -189,9 +253,9 @@ Let's make GNU Emacs look a little better.
     (add-to-list 'magit-git-global-arguments dotfiles-work-tree)
     (call-interactively 'magit-status))
 
-  (nvmap :prefix "SPC"
-    "g d"   '(dotfiles-magit-status
-              :which-key "Dotfiles status"))
+  (reo101/leader-keys
+    "g"  '(:ignore t :which-key "Git")
+    "gd" '(dotfiles-magit-status :which-key "Dotfiles status"))
 #+END_SRC
 
 ** Dotifiles unwrapper, i.e. normal status
@@ -204,9 +268,9 @@ Let's make GNU Emacs look a little better.
     (setq magit-git-global-arguments (remove dotfiles-work-tree magit-git-global-arguments))
     (call-interactively 'magit-status))
   ;; redirect global magit hotkey to our wrapper
-  (nvmap :prefix "SPC"
-    "g g"   '(magit-status-with-removed-dotfiles-args
-              :which-key "Magit status"))
+  (reo101/leader-keys
+    "g"  '(:ignore t :which-key "Git")
+    "gg" '(magit-status-with-removed-dotfiles-args :which-key "Git status"))
 #+END_SRC
 
 ** Pretty Magit
@@ -293,7 +357,7 @@ Let's make GNU Emacs look a little better.
 #+END_SRC
 
 * EMOJIS
-Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :). 
+Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :slight_smile:. 
 
 #+BEGIN_SRC emacs-lisp
   (use-package emojify
@@ -309,6 +373,9 @@ Which-key is a minor mode for Emacs that displays the key bindings following you
 #+begin_src emacs-lisp
   (use-package which-key
     :init
+    (which-key-mode)
+    :diminish which-key-mode
+    :config
     (setq which-key-side-window-location 'bottom
           which-key-sort-order #'which-key-key-order-alpha
           which-key-sort-uppercase-first nil
@@ -320,8 +387,8 @@ Which-key is a minor mode for Emacs that displays the key bindings following you
           which-key-idle-delay 0.8
           which-key-max-description-length 25
           which-key-allow-imprecise-window-fit t
-          which-key-separator " → " ))
-  (which-key-mode)
+          which-key-separator " → " )
+    (which-key-mode))
 #+end_src
 * IVY (COUNSEL/SWIPER)
 Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich allows us to add descriptions alongside the commands in M-x.
@@ -402,12 +469,70 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
   (smex-initialize)
 #+END_SRC
 
-* Code
-** Fluff
-*** Rainbow Delimiters 
+* Code TODO
+** LSP
+* Fluff
+** Undo-tree
+
+#+BEGIN_SRC emacs-lisp
+  (use-package undo-tree
+    :init
+    (global-undo-tree-mode)
+    :config
+    (setq undo-tree-auto-save-history t))
+#+END_SRC
+
+** Rainbow Delimiters 
 
 #+BEGIN_SRC emacs-lisp
   (use-package rainbow-delimiters)
+#+END_SRC
+
+** Electric
+
+#+BEGIN_SRC emacs-lisp
+  (use-package electric-case)
+  (use-package electric-cursor)
+  (use-package electric-operator)
+
+  (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+  (add-hook 'c++-mode-hook
+            (lambda ()
+              (add-to-list (make-local-variable 'electric-pair-pairs) (cons ?< ?>))))
+  (setq electric-pair-pairs '(
+                              (?\( . ?\))
+                              (?\[ . ?\])
+                              (?\{ . ?\})
+                              (?\" . ?\")))
+  (electric-pair-mode t)
+  (use-package electric-spacing)
+#+END_SRC
+
+** Beacon-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package beacon
+    :init
+    (beacon-mode 1)
+    :config
+    (setq beacon-color "#336633")
+    (setq beacon-size 50)
+    (setq beacon-push-mark 35))
+#+END_SRC
+
+** Rainbow-mode
+
+#+begin_src emacs-lisp
+  (use-package rainbow-mode
+    :diminish
+    :hook (prog-mode . rainbow-mode))
+#+end_src
+
+** Pretty symbols
+
+#+BEGIN_SRC emacs-lisp
+  (global-prettify-symbols-mode 1)
+  (setq prettify-symbols-unprettify-at-point 'right-edge)
 #+END_SRC
 
 * Org-mode
@@ -445,13 +570,6 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
       (set-face-attribute (car face) nil ;; :font "Cantarell"
                           :weight 'regular :height (cdr face))))
 
-  ;; (use-package org-faces
-  ;;   :hook (org-mode . reo101/org-mode-big-headings))
-
-  ;; (use-package org-bullets
-  ;;   :hook (org-mode . org-bullets-mode)
-  ;;   :custom (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-
   (with-eval-after-load 'org-superstar
     (set-face-attribute 'org-superstar-item nil :height 1.2)
     (set-face-attribute 'org-superstar-header-bullet nil :height 1.2)
@@ -463,10 +581,6 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
   (setq org-superstar-cycle-headline-bullets nil)
   ;; Hide away leading stars on terminal.
   (setq org-superstar-leading-fallback ?\s)
-
-  ;; (setq
-  ;;     org-superstar-headline-bullets-list '("◉" "○" "●" "○" "●" "○" "●")
-  ;; )
 
   (defun reo101/org-mode-checkbox-todo ()
     "Switch header TODO state to DONE when all checkboxes are ticked, to TODO otherwise"
@@ -491,56 +605,56 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
                     (unless (string-equal todo-state "DONE")
                       (org-todo 'done))
                   (unless (string-equal todo-state "TODO")
-                    (org-todo 'todo)))))))))
-  ;;             ^^^^^^^^^ <- 9
+                    (org-todo 'todo))))))))
+    ;;             ^^^^^^^^^ <- 9
 
-  (add-hook 'org-checkbox-statistics-hook 'reo101/org-checkbox-todo)
+    (add-hook 'org-checkbox-statistics-hook 'reo101/org-checkbox-todo)
 
-  (font-lock-add-keywords 'org-mode
-                          '(("^ *\\([-]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1)
-                                                          (match-end 1) "•"))))))
+    (font-lock-add-keywords 'org-mode
+                            '(("^ *\\([-]\\) "
+                               (0 (prog1 () (compose-region (match-beginning 1)
+                                                            (match-end 1) "•"))))))
 
-  (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
-                                         ("#+END_SRC" . "†")
-                                         ("#+begin_src" . "†")
-                                         ("#+end_src" . "†")
-                                         (">=" . "≥")
-                                         ("=>" . "⇨")))
+    (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
+                                           ("#+END_SRC" . "†")
+                                           ("#+begin_src" . "†")
+                                           ("#+end_src" . "†")
+                                           (">=" . "≥")
+                                           ("=>" . "⇨")))
 
-  (setq prettify-symbols-unprettify-at-point 'right-edge)
-  (add-hook 'org-mode-hook 'prettify-symbols-mode)
+    (setq prettify-symbols-unprettify-at-point 'right-edge)
+    (add-hook 'org-mode-hook 'prettify-symbols-mode)
 
-  ;; (map! :leader
-  ;;        (:prefix ("t" . "toggle")
-  ;;         :desc "Transparency" "t" #'reo101/toggle-transparency))
+    ;; (map! :leader
+    ;;        (:prefix ("t" . "toggle")
+    ;;         :desc "Transparency" "t" #'reo101/toggle-transparency))
 
-  (add-hook 'activate-mark-hook 'rainbow-delimiters-mode-disable)
-  (add-hook 'deactivate-mark-hook 'rainbow-delimiters-mode-enable)
+    (add-hook 'activate-mark-hook 'rainbow-delimiters-mode-disable)
+    (add-hook 'deactivate-mark-hook 'rainbow-delimiters-mode-enable)
 
-  (defun reo101/org-mode-show-current-heading-tidily ()
-    (interactive)
-    "Show next entry, keeping other entries closed."
-    (if (save-excursion (end-of-line) (outline-invisible-p))
-        (progn (org-show-entry) (show-children))
-      (outline-back-to-heading)
-      (unless (and (bolp) (org-on-heading-p))
-        (org-up-heading-safe)
-        (hide-subtree)
-        (error "Boundary reached"))
-      (org-overview)
-      (org-reveal t)
-      (org-show-entry)
-      (show-children)))
+    (defun reo101/org-mode-show-current-heading-tidily ()
+      (interactive)
+      "Show next entry, keeping other entries closed."
+      (if (save-excursion (end-of-line) (outline-invisible-p))
+          (progn (org-show-entry) (show-children))
+        (outline-back-to-heading)
+        (unless (and (bolp) (org-on-heading-p))
+          (org-up-heading-safe)
+          (hide-subtree)
+          (error "Boundary reached"))
+        (org-overview)
+        (org-reveal t)
+        (org-show-entry)
+        (show-children)))
 
-  (use-package highlight-indent-guides
-    :commands highlight-indent-guides-mode
-    :hook (prog-mode . highlight-indent-guides-mode)
-    :config
-    (setq highlight-indent-guides-method 'character
-          highlight-indent-guides-character ?\»
-          highlight-indent-guides-delay 0.01
-          highlight-indent-guides-responsive 'top
-          highlight-indent-guides-auto-enabled nil)) ;nil
+    (use-package highlight-indent-guides
+      :commands highlight-indent-guides-mode
+      :hook (prog-mode . highlight-indent-guides-mode)
+      :config
+      (setq highlight-indent-guides-method 'character
+            highlight-indent-guides-character ?\»
+            highlight-indent-guides-delay 0.01
+            highlight-indent-guides-responsive 'top
+            highlight-indent-guides-auto-enabled nil)) ;nil
 
 #+END_SRC
