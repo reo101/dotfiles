@@ -1,274 +1,525 @@
-* Package setup
+* Init
 ** Package Repos
+
 #+BEGIN_SRC emacs-lisp
-(require 'package)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
+  (require 'package)
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                           ("org" . "https://orgmode.org/elpa/")
+                           ("elpa" . "https://elpa.gnu.org/packages/")))
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
 #+END_SRC
 
 ** use-package
 
 #+BEGIN_SRC emacs-lisp
-;; Initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-(require 'use-package)
-(setq use-package-always-ensure t)
+  ;; Initialize use-package on non-Linux platforms
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+  (require 'use-package)
+  (setq use-package-always-ensure t)
 #+END_SRC
 
-* Evil Mode
+** Bug Hunter
 
 #+BEGIN_SRC emacs-lisp
-(use-package evil
-  :init      ;; tweak evil's configuration before loading it
-  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil)
-  (setq evil-vsplit-window-right t)
-  (setq evil-split-window-below t)
-  (evil-mode))
-(use-package evil-collection
-  :after evil
-  :config
-  (setq evil-collection-mode-list '(dashboard dired ibuffer))
-  (evil-collection-init))
-(use-package evil-tutor)
+  (use-package bug-hunter)
+#+END_SRC
+   
+** TODO straight.el
+* Evil Mode
+** Package
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+    :init      ;; tweak evil's configuration before loading it
+    (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+    (setq evil-want-keybinding nil)
+    (setq evil-vsplit-window-right t)
+    (setq evil-split-window-below t)
+    (evil-mode))
+#+END_SRC
+  
+** Evil-collection
+Evil for more modes
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-collection
+    :after evil
+    :config
+    (setq evil-collection-mode-list '(dashboard dired ibuffer))
+    (evil-collection-init))
 #+END_SRC
 
-* GRAPHICAL USER INTERFACE TWEAKS
+** Evil-tutor 
+Vimtutor but for Evil
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-tutor)
+#+END_SRC
+
+** Set Escape as *global* escape
+   
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+#+END_SRC
+
+* GUI Tweaks
 Let's make GNU Emacs look a little better.
 
-** Disable Menubar, Toolbars and Scrollbars
+** Disable Startup Message
+
 #+BEGIN_SRC emacs-lisp
-(if (display-graphic-p)
-    (progn
-      (menu-bar-mode -1)
-      (tool-bar-mode -1)
-      (scroll-bar-mode -1)))
+  (setq inhibit-startup-message t)
 #+END_SRC
 
-** Display Line Numbers and Truncated Lines
+** Disable Menubar, Toolbars, Hints and Scrollbars
+
 #+BEGIN_SRC emacs-lisp
-(global-display-line-numbers-mode 1)
-(global-visual-line-mode t)
+  (if (display-graphic-p)
+      (progn
+        (tool-bar-mode -1)
+        ;; (tooptip-mode -1)
+        (scroll-bar-mode -1)))
+  (menu-bar-mode -1)
+#+END_SRC
+
+** Add slight fringe
+
+#+BEGIN_SRC emacs-lisp
+  (set-fringe-mode 7)
+#+END_SRC
+   
+** Display Line Numbers and Truncated Lines
+
+#+BEGIN_SRC emacs-lisp
+  (global-display-line-numbers-mode 1)
+  (global-visual-line-mode t)
+#+END_SRC
+
+** Transparency (with toggle)
+
+#+BEGIN_SRC emacs-lisp
+  (set-frame-parameter (selected-frame) 'alpha '(95 . 85))
+  (add-to-list 'default-frame-alist '(alpha . (95 . 85)))
+
+  (defun reo101/toggle-transparency ()
+    (interactive)
+    (let ((alpha (frame-parameter nil 'alpha)))
+      (set-frame-parameter
+       nil 'alpha
+       (if (eql (cond ((numberp alpha) alpha)
+                      ((numberp (cdr alpha)) (cdr alpha))
+                      ;; Also handle undocumented (<active> <inactive>) form.
+                      ((numberp (cadr alpha)) (cadr alpha)))
+                100)
+           '(95 . 85) '(100 . 100)))))
 #+END_SRC
 
 ** Themes
 
 #+begin_src emacs-lisp
-(use-package doom-themes
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-one t)
+  (use-package doom-themes
+    :config
+    ;; Global settings (defaults)
+    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+          doom-themes-enable-italic t) ; if nil, italics is universally disabled
+    (load-theme 'doom-one t)
 
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
+    ;; Enable flashing mode-line on errors
+    (doom-themes-visual-bell-config)
 
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
-  (doom-themes-treemacs-config)
+    ;; Enable custom neotree theme (all-the-icons must be installed!)
+    (doom-themes-neotree-config)
+    ;; or for treemacs users
+    (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
+    (doom-themes-treemacs-config)
 
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+    ;; Corrects (and improves) org-mode's native fontification.
+    (doom-themes-org-config))
 #+end_src
 
 ** Change Modeline To Doom's Modeline
+
 #+BEGIN_SRC emacs-lisp
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
+  (use-package doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1))
 #+END_SRC
 
-** General Keybindings
+** Keybindings by General
 
 #+BEGIN_SRC emacs-lisp
-(use-package general
-  :config
-  (general-evil-setup t))
+  (use-package general
+    :config
+    (general-evil-setup t))
 #+END_SRC
 
 ** ALL THE ICONS
 
 #+BEGIN_SRC emacs-lisp
-(use-package all-the-icons)
+  (use-package all-the-icons)
 #+END_SRC
 
 * Magit
 ** Package
 
 #+BEGIN_SRC emacs-lisp
-(use-package magit)
+  (use-package magit)
 #+END_SRC
 
 ** Forge setup
 
 #+BEGIN_SRC emacs-lisp
-(setq auth-sources '("~/.authinfo.gpg"))
-(setq dotfiles-git-dir (concat "--git-dir=" (expand-file-name "~/dotfiles")))
-(setq dotfiles-work-tree (concat "--work-tree=" (expand-file-name "~")))
+  (setq auth-sources '("~/.authinfo.gpg"))
+  (setq dotfiles-git-dir (concat "--git-dir=" (expand-file-name "~/dotfiles")))
+  (setq dotfiles-work-tree (concat "--work-tree=" (expand-file-name "~")))
 #+END_SRC
 
 ** Dotfiles wrapper for magit status
 
 #+BEGIN_SRC emacs-lisp
-;; function to start magit on dotfiles
-(defun dotfiles-magit-status ()
-  (interactive)
-  (add-to-list 'magit-git-global-arguments dotfiles-git-dir)
-  (add-to-list 'magit-git-global-arguments dotfiles-work-tree)
-  (call-interactively 'magit-status))
+  ;; function to start magit on dotfiles
+  (defun dotfiles-magit-status ()
+    (interactive)
+    (add-to-list 'magit-git-global-arguments dotfiles-git-dir)
+    (add-to-list 'magit-git-global-arguments dotfiles-work-tree)
+    (call-interactively 'magit-status))
 
-(nvmap :prefix "SPC"
-       "g d"   '(dotfiles-magit-status
-                 :which-key "Dotfiles status"))
+  (nvmap :prefix "SPC"
+    "g d"   '(dotfiles-magit-status
+              :which-key "Dotfiles status"))
 #+END_SRC
 
 ** Dotifiles unwrapper, i.e. normal status
 
 #+BEGIN_SRC emacs-lisp
-;; wrapper to remove additional args before starting magit
-(defun magit-status-with-removed-dotfiles-args ()
-  (interactive)
-  (setq magit-git-global-arguments (remove dotfiles-git-dir magit-git-global-arguments))
-  (setq magit-git-global-arguments (remove dotfiles-work-tree magit-git-global-arguments))
-  (call-interactively 'magit-status))
-;; redirect global magit hotkey to our wrapper
-(nvmap :prefix "SPC"
-       "g g"   '(magit-status-with-removed-dotfiles-args
-                 :which-key "Magit status"))
+  ;; wrapper to remove additional args before starting magit
+  (defun magit-status-with-removed-dotfiles-args ()
+    (interactive)
+    (setq magit-git-global-arguments (remove dotfiles-git-dir magit-git-global-arguments))
+    (setq magit-git-global-arguments (remove dotfiles-work-tree magit-git-global-arguments))
+    (call-interactively 'magit-status))
+  ;; redirect global magit hotkey to our wrapper
+  (nvmap :prefix "SPC"
+    "g g"   '(magit-status-with-removed-dotfiles-args
+              :which-key "Magit status"))
 #+END_SRC
 
 ** Pretty Magit
 *** Definition
 
 #+BEGIN_SRC emacs-lisp
-(require 'dash)
+  (require 'dash)
 
-(defmacro pretty-magit (WORD ICON PROPS &optional NO-PROMPT?)
-  "Replace sanitized WORD with ICON, PROPS and by default add to prompts."
-  `(prog1
-     (add-to-list 'pretty-magit-alist
-                  (list (rx bow (group ,WORD (eval (if ,NO-PROMPT? "" ":"))))
-                        ,ICON ',PROPS))
-     (unless ,NO-PROMPT?
-       (add-to-list 'pretty-magit-prompt (concat ,WORD ": ")))))
+  (defmacro pretty-magit (WORD ICON PROPS &optional NO-PROMPT?)
+    "Replace sanitized WORD with ICON, PROPS and by default add to prompts."
+    `(prog1
+         (add-to-list 'pretty-magit-alist
+                      (list (rx bow (group ,WORD (eval (if ,NO-PROMPT? "" ":"))))
+                            ,ICON ',PROPS))
+       (unless ,NO-PROMPT?
+         (add-to-list 'pretty-magit-prompt (concat ,WORD ": ")))))
 
-(setq pretty-magit-alist nil)
-(setq pretty-magit-prompt nil)
-(pretty-magit "Feature" ? (:foreground "slate gray" :height 1.2))
-(pretty-magit "Add"     ? (:foreground "#375E97" :height 1.2))
-(pretty-magit "Fix"     ? (:foreground "#FB6542" :height 1.2))
-(pretty-magit "Clean"   ? (:foreground "#FFBB00" :height 1.2))
-(pretty-magit "Docs"    ? (:foreground "#3F681C" :height 1.2))
-(pretty-magit "master"  ? (:box t :height 1.5) t)
-(pretty-magit "origin"  ? (:box t :height 1.5) t)
+  (setq pretty-magit-alist nil)
+  (setq pretty-magit-prompt nil)
+  (pretty-magit "Feature" ? (:foreground "slate gray" :height 1.2))
+  (pretty-magit "Add"     ? (:foreground "#375E97" :height 1.2))
+  (pretty-magit "Fix"     ? (:foreground "#FB6542" :height 1.2))
+  (pretty-magit "Clean"   ? (:foreground "#FFBB00" :height 1.2))
+  (pretty-magit "Docs"    ? (:foreground "#3F681C" :height 1.2))
+  (pretty-magit "master"  ? (:box t :height 1.2) t)
+  (pretty-magit "origin"  ? (:box t :height 1.2) t)
 
-(defun add-magit-faces ()
-  "Add face properties and compose symbols for buffer from pretty-magit."
-  (interactive)
-  (with-silent-modifications
-    (--each pretty-magit-alist
-      (-let (((rgx icon props) it))
-        (save-excursion
-          (goto-char (point-min))
-          (while (search-forward-regexp rgx nil t)
-            (compose-region
-             (match-beginning 1) (match-end 1) icon)
-            (when props
-              (add-face-text-property
-               (match-beginning 1) (match-end 1) props))))))))
+  (defun add-magit-faces ()
+    "Add face properties and compose symbols for buffer from pretty-magit."
+    (interactive)
+    (with-silent-modifications
+      (--each pretty-magit-alist
+        (-let (((rgx icon props) it))
+          (save-excursion
+            (goto-char (point-min))
+            (while (search-forward-regexp rgx nil t)
+              (compose-region
+               (match-beginning 1) (match-end 1) icon)
+              (when props
+                (add-face-text-property
+                 (match-beginning 1) (match-end 1) props))))))))
 
-(advice-add 'magit-status :after 'add-magit-faces)
-(advice-add 'magit-refresh-buffer :after 'add-magit-faces)
+  (advice-add 'magit-status :after 'add-magit-faces)
+  (advice-add 'magit-refresh-buffer :after 'add-magit-faces)
 #+END_SRC
 
 *** Prompt Hooks
 
 #+BEGIN_SRC emacs-lisp
-(setq use-magit-commit-prompt-p nil)
-(defun use-magit-commit-prompt (&rest args)
-  (setq use-magit-commit-prompt-p t))
+  (setq use-magit-commit-prompt-p nil)
+  (defun use-magit-commit-prompt (&rest args)
+    (setq use-magit-commit-prompt-p t))
 
-(defun magit-commit-prompt ()
-  "Magit prompt and insert commit header with faces."
-  (interactive)
-  (when use-magit-commit-prompt-p
-    (setq use-magit-commit-prompt-p nil)
-    (insert (ivy-read "Commit Type " pretty-magit-prompt
-                      :require-match t :sort t :preselect "Add: "))
-    ;; Or if you are using Helm...
-    ;; (insert (helm :sources (helm-build-sync-source "Commit Type "
-    ;;                          :candidates pretty-magit-prompt)
-    ;;               :buffer "*magit cmt prompt*"))
-    ;; I haven't tested this but should be simple to get the same behaior
-    (add-magit-faces)
-    (evil-insert 1)  ; If you use evil
-    ))
+  (defun magit-commit-prompt ()
+    "Magit prompt and insert commit header with faces."
+    (interactive)
+    (when use-magit-commit-prompt-p
+      (setq use-magit-commit-prompt-p nil)
+      (insert (ivy-read "Commit Type " pretty-magit-prompt
+                        :require-match t :sort t :preselect "Add: "))
+      ;; Or if you are using Helm...
+      ;; (insert (helm :sources (helm-build-sync-source "Commit Type "
+      ;;                          :candidates pretty-magit-prompt)
+      ;;               :buffer "*magit cmt prompt*"))
+      ;; I haven't tested this but should be simple to get the same behaior
+      (add-magit-faces)
+      (evil-insert 1)  ; If you use evil
+      ))
 
-(remove-hook 'git-commit-setup-hook 'with-editor-usage-message)
-(add-hook 'git-commit-setup-hook 'magit-commit-prompt)
-(advice-add 'magit-commit :after 'use-magit-commit-prompt)
+  (remove-hook 'git-commit-setup-hook 'with-editor-usage-message)
+  (add-hook 'git-commit-setup-hook 'magit-commit-prompt)
+  (advice-add 'magit-commit :after 'use-magit-commit-prompt)
 #+END_SRC
+* GPG
+** Opening .gpg files
+   
+#+BEGIN_SRC emacs-lisp
+  (require 'epa)
+  (epa-file-enable)
+  (setq epg-gpg-program "$PREFIX/bin/gpg")
+  ;; Don't display graphic prompt in terminal
+  (when (not (display-graphic-p))
+    (setq epg-gpg-program "$PREFIX/bin/gpg"))
+#+END_SRC
+
 * EMOJIS
 Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :). 
 
 #+BEGIN_SRC emacs-lisp
-(use-package emojify
-  :hook (after-init . global-emojify-mode))
+  (use-package emojify
+    :hook (after-init . global-emojify-mode))
 #+END_SRC
 
+* Which-key
+** WHICH KEY
+Which-key is a minor mode for Emacs that displays the key bindings following your currently entered incomplete command (a prefix) in a popup.
+
+=NOTE:= Which-key has an annoying bug that in some fonts and font sizes, the bottom row in which key gets covered up by the modeline.
+
+#+begin_src emacs-lisp
+  (use-package which-key
+    :init
+    (setq which-key-side-window-location 'bottom
+          which-key-sort-order #'which-key-key-order-alpha
+          which-key-sort-uppercase-first nil
+          which-key-add-column-padding 1
+          which-key-max-display-columns nil
+          which-key-min-display-lines 6
+          which-key-side-window-slot -10
+          which-key-side-window-max-height 0.25
+          which-key-idle-delay 0.8
+          which-key-max-description-length 25
+          which-key-allow-imprecise-window-fit t
+          which-key-separator " → " ))
+  (which-key-mode)
+#+end_src
 * IVY (COUNSEL/SWIPER)
 Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich allows us to add descriptions alongside the commands in M-x.
 
 ** Installing Ivy And Basic Setup
 #+BEGIN_SRC emacs-lisp
-(use-package counsel
-  :after ivy
-  :config (counsel-mode))
-(use-package ivy
-  :defer 0.1
-  :diminish
-  :bind
-  (("C-c C-r" . ivy-resume)
-   ("C-x B" . ivy-switch-buffer-other-window))
-  :custom
-  (setq ivy-count-format "(%d/%d) ")
-  (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
-  :config
-  (ivy-mode))
-(use-package ivy-rich
-  :after ivy
-  :custom
-  (ivy-virtual-abbreviate 'full
-   ivy-rich-switch-buffer-align-virtual-buffer t
-   ivy-rich-path-style 'abbrev)
-  :config
-  (ivy-set-display-transformer 'ivy-switch-buffer
-                               'ivy-rich-switch-buffer-transformer)
-  (ivy-rich-mode 1)) ;; this gets us descriptions in M-x.
-(use-package swiper
-  :after ivy
-  :bind (("C-s" . swiper)
-         ("C-r" . swiper)))
+  (use-package counsel
+    :after ivy
+    :config (counsel-mode))
+  (use-package ivy
+    :defer 0.1
+    :diminish
+    :bind (("C-c C-r" . ivy-resume)
+           ("C-x B" . ivy-switch-buffer-other-window)
+           :map ivy-minibuffer-map
+           ("TAB" . ivy-alt-done)
+           ("C-l" . ivy-alt-done)
+           ("C-j" . ivy-next-line)
+           ("C-k" . ivy-previous-line)
+           :map ivy-switch-buffer-map
+           ("C-k" . ivy-previous-line)
+           ("C-l" . ivy-done)
+           ("C-d" . ivy-switch-buffer-kill)
+           :map ivy-reverse-i-search-map
+           ("C-k" . ivy-previous-line)
+           ("C-d" . ivy-reverse-i-search-kill))
+    :custom
+    (setq ivy-count-format "(%d/%d) ")
+    (setq ivy-use-virtual-buffers t)
+    (setq enable-recursive-minibuffers t)
+    :config
+    (ivy-mode 1))
+  (use-package ivy-rich
+    :after ivy
+    :custom
+    (ivy-virtual-abbreviate 'full
+                            ivy-rich-switch-buffer-align-virtual-buffer t
+                            ivy-rich-path-style 'abbrev)
+    :config
+    (ivy-set-display-transformer 'ivy-switch-buffer
+                                 'ivy-rich-switch-buffer-transformer)
+    (ivy-rich-mode 1)) ;; this gets us descriptions in M-x.
+  (use-package swiper
+    :after ivy
+    :bind (("C-s" . swiper)
+           ("C-r" . swiper)))
 #+END_SRC
 
 ** Making M-x Great Again!
 The following line removes the annoying '^' in things like counsel-M-x and other ivy/counsel prompts.  The default '^' string means that if you type something immediately after this string only completion candidates that begin with what you typed are shown.  Most of the time, I'm searching for a command without knowing what it begins with though.
 
 #+BEGIN_SRC emacs-lisp
-(setq ivy-initial-inputs-alist nil)
+  (setq ivy-initial-inputs-alist nil)
 #+END_SRC
 
 Smex is a package the makes M-x remember our history.  Now M-x will show our last used commands first.
 #+BEGIN_SRC emacs-lisp
-(use-package smex)
-(smex-initialize)
+  (use-package smex)
+  (smex-initialize)
+#+END_SRC
+
+* Code
+** Fluff
+*** Rainbow Delimiters 
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters)
+#+END_SRC
+
+* Org-mode
+
+#+BEGIN_SRC emacs-lisp
+  (defun reo101/org-mode-setup ()
+    (org-indent-mode)
+    (visual-line-mode 1))
+
+  (use-package org
+    :hook (org-mode . reo101/org-mode-setup)
+    :custom
+    (org-ellipsis " ▼")
+    (org-hide-emphasis-markers t)
+    (org-src-window-setup 'current-window))
+
+  ;; (defun reo101/org-mode-visual-fill ()
+  ;;  (setq visual-fill-column-width 125
+  ;;        visual-fill-column-center-text t)
+  ;;  (visual-fill-column-mode 1))
+  ;;
+  ;; (use-package! visual-fill-column
+  ;;   :diminish visual-line-mode
+  ;;   :hook (org-mode . reo101/org-mode-visual-fill))
+
+  (defun reo101/org-mode-big-headings ()
+    (dolist (face '((org-level-1 . 1.4)
+                    (org-level-2 . 1.35)
+                    (org-level-3 . 1.30)
+                    (org-level-4 . 1.25)
+                    (org-level-5 . 1.20)
+                    (org-level-6 . 1.15)
+                    (org-level-7 . 1.10)
+                    (org-level-8 . 1.05)))
+      (set-face-attribute (car face) nil ;; :font "Cantarell"
+                          :weight 'regular :height (cdr face))))
+
+  ;; (use-package org-faces
+  ;;   :hook (org-mode . reo101/org-mode-big-headings))
+
+  ;; (use-package org-bullets
+  ;;   :hook (org-mode . org-bullets-mode)
+  ;;   :custom (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+  (with-eval-after-load 'org-superstar
+    (set-face-attribute 'org-superstar-item nil :height 1.2)
+    (set-face-attribute 'org-superstar-header-bullet nil :height 1.2)
+    (set-face-attribute 'org-superstar-leading nil :height 1.3))
+  ;; Set different bullets, with one getting a terminal fallback.
+  (setq org-superstar-headline-bullets-list
+        '("◉" "○" "●" "○" "●" "○" "●"))
+  ;; Stop cycling bullets to emphasize hierarchy of headlines.
+  (setq org-superstar-cycle-headline-bullets nil)
+  ;; Hide away leading stars on terminal.
+  (setq org-superstar-leading-fallback ?\s)
+
+  ;; (setq
+  ;;     org-superstar-headline-bullets-list '("◉" "○" "●" "○" "●" "○" "●")
+  ;; )
+
+  (defun reo101/org-mode-checkbox-todo ()
+    "Switch header TODO state to DONE when all checkboxes are ticked, to TODO otherwise"
+    (let ((todo-state (org-get-todo-state)) beg end)
+      (unless (not todo-state)
+        (save-excursion
+          (org-back-to-heading t)
+          (setq beg (point))
+          (end-of-line)
+          (setq end (point))
+          (goto-char beg)
+          (if (re-search-forward "\\[\\([0-9]*%\\)\\]\\|\\[\\([0-9]*\\)/\\([0-9]*\\)\\]"
+                                 end t)
+              (if (match-end 1)
+                  (if (equal (match-string 1) "100%")
+                      (unless (string-equal todo-state "DONE")
+                        (org-todo 'done))
+                    (unless (string-equal todo-state "TODO")
+                      (org-todo 'todo)))
+                (if (and (> (match-end 2) (match-beginning 2))
+                         (equal (match-string 2) (match-string 3)))
+                    (unless (string-equal todo-state "DONE")
+                      (org-todo 'done))
+                  (unless (string-equal todo-state "TODO")
+                    (org-todo 'todo)))))))))
+                    ;;             ^^^^^^^^^ <- 9
+
+    (add-hook 'org-checkbox-statistics-hook 'reo101/org-checkbox-todo)
+
+    (font-lock-add-keywords 'org-mode
+                            '(("^ *\\([-]\\) "
+                               (0 (prog1 () (compose-region (match-beginning 1)
+                                                            (match-end 1) "•"))))))
+
+    (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
+                                           ("#+END_SRC" . "†")
+                                           ("#+begin_src" . "†")
+                                           ("#+end_src" . "†")
+                                           (">=" . "≥")
+                                           ("=>" . "⇨")))
+
+    (setq prettify-symbols-unprettify-at-point 'right-edge)
+    (add-hook 'org-mode-hook 'prettify-symbols-mode)
+
+    ;; (map! :leader
+    ;;        (:prefix ("t" . "toggle")
+    ;;         :desc "Transparency" "t" #'reo101/toggle-transparency))
+
+    (add-hook 'activate-mark-hook 'rainbow-delimiters-mode-disable)
+    (add-hook 'deactivate-mark-hook 'rainbow-delimiters-mode-enable)
+
+    (defun reo101/org-mode-show-current-heading-tidily ()
+      (interactive)
+      "Show next entry, keeping other entries closed."
+      (if (save-excursion (end-of-line) (outline-invisible-p))
+          (progn (org-show-entry) (show-children))
+        (outline-back-to-heading)
+        (unless (and (bolp) (org-on-heading-p))
+          (org-up-heading-safe)
+          (hide-subtree)
+          (error "Boundary reached"))
+        (org-overview)
+        (org-reveal t)
+        (org-show-entry)
+        (show-children)))
+
+    (use-package highlight-indent-guides
+      :commands highlight-indent-guides-mode
+      :hook (prog-mode . highlight-indent-guides-mode)
+      :config
+      (setq highlight-indent-guides-method 'character
+            highlight-indent-guides-character ?\»
+            highlight-indent-guides-delay 0.01
+            highlight-indent-guides-responsive 'top
+            highlight-indent-guides-auto-enabled nil)) ;nil
+
 #+END_SRC
