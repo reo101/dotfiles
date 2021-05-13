@@ -492,55 +492,55 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
                       (org-todo 'done))
                   (unless (string-equal todo-state "TODO")
                     (org-todo 'todo)))))))))
-                    ;;             ^^^^^^^^^ <- 9
+  ;;             ^^^^^^^^^ <- 9
 
-    (add-hook 'org-checkbox-statistics-hook 'reo101/org-checkbox-todo)
+  (add-hook 'org-checkbox-statistics-hook 'reo101/org-checkbox-todo)
 
-    (font-lock-add-keywords 'org-mode
-                            '(("^ *\\([-]\\) "
-                               (0 (prog1 () (compose-region (match-beginning 1)
-                                                            (match-end 1) "•"))))))
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1)
+                                                          (match-end 1) "•"))))))
 
-    (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
-                                           ("#+END_SRC" . "†")
-                                           ("#+begin_src" . "†")
-                                           ("#+end_src" . "†")
-                                           (">=" . "≥")
-                                           ("=>" . "⇨")))
+  (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
+                                         ("#+END_SRC" . "†")
+                                         ("#+begin_src" . "†")
+                                         ("#+end_src" . "†")
+                                         (">=" . "≥")
+                                         ("=>" . "⇨")))
 
-    (setq prettify-symbols-unprettify-at-point 'right-edge)
-    (add-hook 'org-mode-hook 'prettify-symbols-mode)
+  (setq prettify-symbols-unprettify-at-point 'right-edge)
+  (add-hook 'org-mode-hook 'prettify-symbols-mode)
 
-    ;; (map! :leader
-    ;;        (:prefix ("t" . "toggle")
-    ;;         :desc "Transparency" "t" #'reo101/toggle-transparency))
+  ;; (map! :leader
+  ;;        (:prefix ("t" . "toggle")
+  ;;         :desc "Transparency" "t" #'reo101/toggle-transparency))
 
-    (add-hook 'activate-mark-hook 'rainbow-delimiters-mode-disable)
-    (add-hook 'deactivate-mark-hook 'rainbow-delimiters-mode-enable)
+  (add-hook 'activate-mark-hook 'rainbow-delimiters-mode-disable)
+  (add-hook 'deactivate-mark-hook 'rainbow-delimiters-mode-enable)
 
-    (defun reo101/org-mode-show-current-heading-tidily ()
-      (interactive)
-      "Show next entry, keeping other entries closed."
-      (if (save-excursion (end-of-line) (outline-invisible-p))
-          (progn (org-show-entry) (show-children))
-        (outline-back-to-heading)
-        (unless (and (bolp) (org-on-heading-p))
-          (org-up-heading-safe)
-          (hide-subtree)
-          (error "Boundary reached"))
-        (org-overview)
-        (org-reveal t)
-        (org-show-entry)
-        (show-children)))
+  (defun reo101/org-mode-show-current-heading-tidily ()
+    (interactive)
+    "Show next entry, keeping other entries closed."
+    (if (save-excursion (end-of-line) (outline-invisible-p))
+        (progn (org-show-entry) (show-children))
+      (outline-back-to-heading)
+      (unless (and (bolp) (org-on-heading-p))
+        (org-up-heading-safe)
+        (hide-subtree)
+        (error "Boundary reached"))
+      (org-overview)
+      (org-reveal t)
+      (org-show-entry)
+      (show-children)))
 
-    (use-package highlight-indent-guides
-      :commands highlight-indent-guides-mode
-      :hook (prog-mode . highlight-indent-guides-mode)
-      :config
-      (setq highlight-indent-guides-method 'character
-            highlight-indent-guides-character ?\»
-            highlight-indent-guides-delay 0.01
-            highlight-indent-guides-responsive 'top
-            highlight-indent-guides-auto-enabled nil)) ;nil
+  (use-package highlight-indent-guides
+    :commands highlight-indent-guides-mode
+    :hook (prog-mode . highlight-indent-guides-mode)
+    :config
+    (setq highlight-indent-guides-method 'character
+          highlight-indent-guides-character ?\»
+          highlight-indent-guides-delay 0.01
+          highlight-indent-guides-responsive 'top
+          highlight-indent-guides-auto-enabled nil)) ;nil
 
 #+END_SRC
