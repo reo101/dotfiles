@@ -330,7 +330,12 @@ Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich 
 #+BEGIN_SRC emacs-lisp
   (use-package counsel
     :after ivy
-    :config (counsel-mode))
+    :bind (("M-x" . counsel-M-x)
+           ("C-x b" . counsel-ibuffer)
+           ("C-x C-f" . counsel-find-file)
+           :map minibuffer-local-map
+           ("C-r" . 'counsel-minibuffer-history)))
+  :config (counsel-mode))
   (use-package ivy
     :defer 0.1
     :diminish
