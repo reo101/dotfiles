@@ -88,7 +88,9 @@ Let's make GNU Emacs look a little better.
 ** Add slight fringe
 
 #+BEGIN_SRC emacs-lisp
-  (set-fringe-mode 7)
+  (if (display-graphic-p)
+      (progn
+        (set-fringe-mode 7)))
 #+END_SRC
    
 ** Display Line Numbers and Truncated Lines
