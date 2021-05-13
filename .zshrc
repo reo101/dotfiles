@@ -15,11 +15,15 @@ cmdhistory="$HOME/.config/zsh/history.zsh"
 # wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/lib/key-bindings.zsh
 bindings="$HOME/.config/zsh/key-bindings.zsh"
 
+# https://ownyourbits.com/2017/01/30/list-files-without-stopping-to-type-in-zsh/
+# wget https://raw.githubusercontent.com/nachoparker/tab_list_files_zsh_widget/master/tab_list_files_zsh.sh -O tabautocd.zsh
+tabautocd="$HOME/.config/zsh/tabautocd.zsh"
+
 fzf="$HOME/.config/zsh/.fzf.zsh"
 
 ##################################################
 
-[ -f "$syntaxhl" ] && source "$syntaxhl"
+[ -f "$syntaxhl" ]      && source "$syntaxhl"
 if [ -f "$completion" ]; then
 
     source "$completion"
@@ -39,10 +43,11 @@ if [ -f "$completion" ]; then
     zmodload -i zsh/complist
 
 fi
-[ -f "$suggestions" ] && source "$suggestions"
-[ -f "$cmdhistory" ] && source "$cmdhistory"
-[ -f "$bindings" ] && source "$bindings"
-[ -f "$fzf" ] && source "$fzf"
+[ -f "$suggestions" ]   && source "$suggestions"
+[ -f "$cmdhistory" ]    && source "$cmdhistory"
+[ -f "$bindings" ]      && source "$bindings"
+[ -f "$tabautocd" ]     && source "$tabautocd"
+[ -f "$fzf" ]           && source "$fzf"
 
 ##################################################
 
@@ -51,6 +56,7 @@ unset completion
 unset suggestions
 unset cmdhistory
 unset bindings
+unset tabautocd
 unset fzf
 
 ##################################################
