@@ -570,17 +570,20 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
       (set-face-attribute (car face) nil ;; :font "Cantarell"
                           :weight 'regular :height (cdr face))))
 
-  (with-eval-after-load 'org-superstar
+  (use-package org-superstar
+    :after org
+    :config
     (set-face-attribute 'org-superstar-item nil :height 1.2)
     (set-face-attribute 'org-superstar-header-bullet nil :height 1.2)
-    (set-face-attribute 'org-superstar-leading nil :height 1.3))
-  ;; Set different bullets, with one getting a terminal fallback.
-  (setq org-superstar-headline-bullets-list
-        '("◉" "○" "●" "○" "●" "○" "●"))
-  ;; Stop cycling bullets to emphasize hierarchy of headlines.
-  (setq org-superstar-cycle-headline-bullets nil)
-  ;; Hide away leading stars on terminal.
-  (setq org-superstar-leading-fallback ?\s)
+    (set-face-attribute 'org-superstar-leading nil :height 1.3)
+    ;; Set different bullets, with one getting a terminal fallback.
+    (setq org-superstar-headline-bullets-list
+          '("◉" "○" "●" "○" "●" "○" "●"))
+    ;; Stop cycling bullets to emphasize hierarchy of headlines.
+    (setq org-superstar-cycle-headline-bullets nil)
+    ;; Hide away leading stars on terminal.
+    (setq org-superstar-leading-fallback ?\s)
+    :hook (org-mode . org-superstar-mode))
 
   (defun reo101/org-mode-checkbox-todo ()
     "Switch header TODO state to DONE when all checkboxes are ticked, to TODO otherwise"
