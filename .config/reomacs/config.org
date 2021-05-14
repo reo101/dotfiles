@@ -168,7 +168,8 @@ Let's make GNU Emacs look a little better.
   (dolist (mode '(org-mode-hook
                   term-mode-hook
                   shell-mode-hook
-                  eshell-mode-hook))
+                  eshell-mode-hook
+                  undo-tree-visualizer-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 #+END_SRC
 
