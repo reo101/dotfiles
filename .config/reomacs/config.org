@@ -609,8 +609,8 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
                     (unless (string-equal todo-state "DONE")
                       (org-todo 'done))
                   (unless (string-equal todo-state "TODO")
-                    (org-todo 'todo))))))))
-    ;;             ^^^^^^^^^ <- 9
+                    (org-todo 'todo)))))))))
+    ;;                             ^^^^^^^^^ <- 9
 
     (add-hook 'org-checkbox-statistics-hook 'reo101/org-checkbox-todo)
 
