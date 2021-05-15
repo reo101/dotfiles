@@ -391,6 +391,7 @@ Which-key is a minor mode for Emacs that displays the key bindings following you
           which-key-separator " → " )
     (which-key-mode))
 #+end_src
+
 * IVY (COUNSEL/SWIPER)
 Ivy, counsel and swiper are a generic completion mechanism for Emacs.  Ivy-rich allows us to add descriptions alongside the commands in M-x.
 
