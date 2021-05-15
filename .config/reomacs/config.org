@@ -530,6 +530,14 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
     :hook (prog-mode . rainbow-mode))
 #+end_src
 
+** Elcord
+
+#+BEGIN_SRC emacs-lisp
+  (use-package elcord
+    :config
+    (elcord-mode))
+#+END_SRC
+
 ** Pretty symbols
 
 #+BEGIN_SRC emacs-lisp
