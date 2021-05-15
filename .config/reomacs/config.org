@@ -345,6 +345,7 @@ Let's make GNU Emacs look a little better.
   (add-hook 'git-commit-setup-hook 'magit-commit-prompt)
   (advice-add 'magit-commit :after 'use-magit-commit-prompt)
 #+END_SRC
+
 * GPG
 ** Opening .gpg files
    
