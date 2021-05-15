@@ -13,3 +13,6 @@
 [submodule ".config/zsh/fzf"]
 	path = .config/zsh/fzf
 	url = https://www.github.com/junegunn/fzf.git
+[submodule "/home/reo101/.emacs.d"]
+	path = /home/reo101/.emacs.d
+	url = https://github.com/plexus/chemacs2.git
