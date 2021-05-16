@@ -28,6 +28,30 @@
 #+END_SRC
    
 ** TODO straight.el
+* Keybinds
+** Keybindings by General
+
+#+BEGIN_SRC emacs-lisp
+  (use-package general
+    :config
+    (general-create-definer reo101/leader-keys
+      :keymaps '(normal insert visual emacs)
+      :prefix "SPC"
+      :global-prefix "C-SPC")
+
+    (reo101/leader-keys
+      "t"  '(:ignore t :which-key "Toggle")
+      "tt" '(reo101/toggle-transparency :which-key "Transparency")
+      "c" '(:ignore c :which-key "Choose")
+      "ct" '(counsel-load-theme :which-key "Theme")))
+#+END_SRC
+    
+** Set Escape as *global* escape
+   
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+#+END_SRC
+
 * Evil Mode
 
 ** Custom hook (unused)
@@ -60,6 +84,7 @@
     (setq evil-vsplit-window-right t)
     (setq evil-split-window-below t)
     (setq evil-undo-system 'undo-tree)
+    ;; (setq evil-cross-lines t) ;; Shadowed by evil-snipe
     ;; :hook (evil-mode . reo101/evil-hook)
     :config
     (evil-mode 1)
@@ -91,28 +116,41 @@ Vimtutor but for Evil
   (use-package evil-tutor)
 #+END_SRC
 
-* Keybinds
-** Keybindings by General
+** Evil-goggles
+Note: slows down deletions so it can how the animation
 
 #+BEGIN_SRC emacs-lisp
-  (use-package general
+  (use-package evil-goggles
     :config
-    (general-create-definer reo101/leader-keys
-      :keymaps '(normal insert visual emacs)
-      :prefix "SPC"
-      :global-prefix "C-SPC")
+    (evil-goggles-mode)
 
-    (reo101/leader-keys
-      "t"  '(:ignore t :which-key "Toggle")
-      "tt" '(reo101/toggle-transparency :which-key "Transparency")
-      "c" '(:ignore c :which-key "Choose")
-      "ct" '(counsel-load-theme :which-key "Theme")))
+    ;; optionally use diff-mode's faces; as a result, deleted text
+    ;; will be highlighed with `diff-removed` face which is typically
+    ;; some red color (as defined by the color theme)
+    ;; other faces such as `diff-added` will be used for other actions
+    (evil-goggles-use-diff-faces))
 #+END_SRC
-    
-** Set Escape as *global* escape
-   
+
+** Evil-numbers
+
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+  ;; TODO
+#+END_SRC
+
+** Evil-snipe
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-snipe
+    :config
+    (evil-snipe-mode +1)
+    (evil-snipe-override-mode +1)
+    (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode))
+#+END_SRC
+
+** Evil-anzu
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-anzu)
 #+END_SRC
 
 * Hydra
