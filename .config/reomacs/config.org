@@ -28,6 +28,23 @@
 #+END_SRC
    
 ** TODO straight.el
+** Load Secrets
+
+#+BEGIN_SRC emacs-lisp
+  (defun reo101/secret (&optional name)
+    "Read a Lisp structure from the secret file.
+  When NAME is provided, return the value associated to this key."
+    (let ((file (expand-file-name ".secrets.eld")))
+      (when (file-exists-p file)
+        (with-demoted-errors "Error while parsing secret file: %S"
+          (with-temp-buffer
+            (insert-file-contents file)
+            (if-let ((content (read (buffer-string)))
+                     (name))
+                (alist-get name content)
+              content))))))
+#+END_SRC
+
 * Keybinds
 ** Keybindings by General
 
@@ -582,6 +599,15 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
 #+BEGIN_SRC emacs-lisp
   (global-prettify-symbols-mode 1)
   (setq prettify-symbols-unprettify-at-point 'right-edge)
+#+END_SRC
+
+** Wakatime
+
+#+BEGIN_SRC emacs-lisp
+  (use-package wakatime-mode
+    :config
+    (setq wakatime-api-key (reo101/secret 'wakatime-api-key))
+    (global-wakatime-mode))
 #+END_SRC
 
 * Org-mode
