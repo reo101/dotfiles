@@ -16,3 +16,6 @@
 [submodule ".emacs.d"]
 	path = .emacs.d
 	url = https://github.com/plexus/chemacs2.git
+[submodule ".local/src/mutt-wizard"]
+	path = .local/src/mutt-wizard
+	url = https://github.com/LukeSmithxyz/mutt-wizard
