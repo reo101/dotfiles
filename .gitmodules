@@ -1,9 +1,9 @@
 [submodule ".local/src/mpd-rich-presence-discord"]
 	path = .local/src/mpd-rich-presence-discord
-	url = https://www.github.com/justas-d/mpd-rich-presence-discord
+	url = https://www.github.com/justas-d/mpd-rich-presence-discord.git
 [submodule ".local/src/wal-discord"]
 	path = .local/src/wal-discord
-	url = https://github.com/guglicap/wal-discord
+	url = https://github.com/guglicap/wal-discord.git
 [submodule ".config/zsh/fast-syntax-highlighting"]
 	path = .config/zsh/fast-syntax-highlighting
 	url = https://www.github.com/zdharma/fast-syntax-highlighting.git
