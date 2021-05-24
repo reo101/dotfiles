@@ -1,2 +1,2 @@
-(("default"     . ((user-emacs-directory . "~/.config/reomacs")))
+(("reomacs"     . ((user-emacs-directory . "~/.config/reomacs")))
  ("doom"        . ((user-emacs-directory . "~/.config/emacs-doom"))))
