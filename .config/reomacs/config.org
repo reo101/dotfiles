@@ -1137,6 +1137,13 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
   (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'reo101/org-babel-tangle-config)))
 #+END_SRC
 
+** Org-fragtog
+
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package org-fragtog
+  ;;   :hook (org-mode . org-fragtog-mode))
+#+END_SRC
+
 * Latex
 
 #+BEGIN_SRC emacs-lisp
@@ -1145,4 +1152,18 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
 
   (use-package latex-preview-pane
     :defer t)
+
+  (use-package evil-tex
+    :hook(LaTeX-mode . evil-tex-mode))
+
+  (add-hook 'LaTeX-mode-hook 'TeX-fold-mode)
+
+  (setq TeX-electric-sub-and-superscript 1)
+
+  ;; (use-package tex-fold
+  ;;   :hook (LaTeX-mode . TeX-fold-mode))
+
+  (use-package xenops
+    :hook (LaTeX-mode . xenops-mode))
+
 #+END_SRC
