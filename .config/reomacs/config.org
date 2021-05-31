@@ -322,7 +322,7 @@ Let's make GNU Emacs look a little better.
     ;; Global settings (defaults)
     (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
           doom-themes-enable-italic t) ; if nil, italics is universally disabled
-    (load-theme 'doom-one t)
+    (load-theme 'doom-monokai-pro t)
 
     ;; Enable flashing mode-line on errors
     (doom-themes-visual-bell-config)
@@ -338,7 +338,7 @@ Let's make GNU Emacs look a little better.
 #+end_src
 
 #+BEGIN_SRC emacs-lisp
-  (use-package mood-one-theme)
+  ;; (use-package mood-one-theme)
 #+END_SRC
 
 ** Change Modeline To Doom's Modeline
