@@ -182,6 +182,14 @@ Note: slows down deletions so it can how the animation
     (global-anzu-mode))
 #+END_SRC
 
+** Evil-surround
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-surround
+    :config
+    (global-evil-surround-mode 1))
+#+END_SRC
+
 * Hydra
 
 #+BEGIN_SRC emacs-lisp
