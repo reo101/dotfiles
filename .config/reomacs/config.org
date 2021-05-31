@@ -668,6 +668,13 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
           highlight-indent-guides-auto-enabled nil)) ;nil
 #+END_SRC
 
+** Comments
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-nerd-commenter
+    :bind ("M-/" . evilnc-comment-or-uncomment-lines))
+#+END_SRC
+
 * Fluff
 ** Undo-tree
 
