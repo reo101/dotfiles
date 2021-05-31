@@ -219,9 +219,10 @@ Let's make GNU Emacs look a little better.
 #+BEGIN_SRC emacs-lisp
   (if (display-graphic-p)
       (progn
-        (tool-bar-mode -1)
         ;; (tooptip-mode -1)
-        (scroll-bar-mode -1)))
+        ))
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
   (menu-bar-mode -1)
 #+END_SRC
 
