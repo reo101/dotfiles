@@ -380,7 +380,7 @@ Let's make GNU Emacs look a little better.
 #+END_SRC
 
 * EMOJIS
-Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :slight_smile:. 
+Emojify is an Emacs extension to display emojis. It can display github style emojis like :smile: or plain ascii ones like :slight_smile:.
 
 #+BEGIN_SRC emacs-lisp
   (use-package emojify
