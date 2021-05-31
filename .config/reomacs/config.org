@@ -355,6 +355,18 @@ Let's make GNU Emacs look a little better.
   (use-package all-the-icons)
 #+END_SRC
 
+** Dont ask to spell out =yes=
+
+#+BEGIN_SRC emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+** Highlight parenthesis
+
+#+BEGIN_SRC emacs-lisp
+  (show-paren-mode 1)
+#+END_SRC
+
 * GPG
 ** Opening .gpg files
 
