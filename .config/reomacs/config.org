@@ -37,7 +37,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package bug-hunter)
 #+END_SRC
-   
+
 ** TODO straight.el
 ** Load Secrets
 
@@ -73,9 +73,9 @@
       "c" '(:ignore c :which-key "Choose")
       "ct" '(counsel-load-theme :which-key "Theme")))
 #+END_SRC
-    
+
 ** Set Escape as *global* escape
-   
+
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 #+END_SRC
@@ -124,7 +124,7 @@
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal))
 #+END_SRC
-  
+
 ** Evil-collection
 Evil for more modes
 
@@ -136,7 +136,7 @@ Evil for more modes
     (evil-collection-init))
 #+END_SRC
 
-** Evil-tutor 
+** Evil-tutor
 Vimtutor but for Evil
 
 #+BEGIN_SRC emacs-lisp
@@ -232,7 +232,7 @@ Let's make GNU Emacs look a little better.
       (progn
         (set-fringe-mode 7)))
 #+END_SRC
-   
+
 ** Display Line Numbers and Truncated Lines
 
 #+BEGIN_SRC emacs-lisp
@@ -312,7 +312,7 @@ Let's make GNU Emacs look a little better.
 
 * GPG
 ** Opening .gpg files
-   
+
 #+BEGIN_SRC emacs-lisp
   (require 'epa)
   (epa-file-enable)
@@ -635,7 +635,7 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
     (setq undo-tree-history-directory-alist '(("." . "~/.config/reomacs/undo"))))
 #+END_SRC
 
-** Rainbow Delimiters 
+** Rainbow Delimiters
 
 *** Package
 
@@ -737,14 +737,14 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
   ;;     (interactive)
   ;;     (unless (executable-find "pngpaste")
   ;;       (user-error "please install pngpaste"))
-  ;; 
+  ;;
   ;;     (let* ((filepath (make-temp-file "clipboard" nil ".png"))
   ;;            (command (format "pngpaste %s" filepath))
   ;;            (command-stdout (shell-command-to-string command)))
   ;;       ;; pngpaste returns "" when found a valid image in the clipboard
   ;;       (unless (string-equal command-stdout "")
   ;;         (user-error (string-trim command-stdout)))
-  ;; 
+  ;;
   ;;       (switch-to-buffer (get-buffer-create "*meme*"))
   ;;       (meme-mode)
   ;;       (meme--setup-image filepath)))
@@ -857,6 +857,7 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
     (add-to-list 'org-modules 'org-habit)
     (setq org-habit-graph-column 60)
 #+END_SRC
+
 ** Org-todo
 
 #+BEGIN_SRC  emacs-lisp
