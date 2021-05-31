@@ -484,6 +484,94 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
 
 * Code
 ** LSP
+*** Packages
+**** Main Package
+
+#+BEGIN_SRC emacs-lisp
+  (defun reo101/lsp-mode-setup ()
+    (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+    (lsp-headerline-breadcrumb-mode))
+
+  (use-package lsp-mode
+    :commands (lsp lsp-deferred)
+    :hook (lsp-mode . reo101/lsp-mode-setup)
+    :init
+    (reo101/leader-keys
+      "l" '(lsp-keymap :whick-key "LSP"))
+    :config
+    (lsp-enable-which-key-integration t))
+#+END_SRC
+
+**** LSP UI
+
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-ui
+    :hook (lsp-mode . lsp-ui-mode)
+    :custom
+    (lsp-ui-doc-position 'bottom))
+#+END_SRC
+
+**** Treemacs
+
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-treemacs
+    :after lsp)
+#+END_SRC
+
+**** LSP Ivy
+
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-ivy
+    :commands lsp-ivy-workspace-symbol)
+#+END_SRC
+
+*** Langauges
+**** Typescript
+
+#+BEGIN_SRC emacs-lisp
+  (use-package typescript-mode
+    :mode "\\.ts\\'"
+    :hook (typescript-mode . lsp-deferred)
+    :config
+    (setq typescript-indent-level 4))
+#+END_SRC
+
+**** C++
+
+#+BEGIN_SRC emacs-lisp
+  ;; todo
+#+END_SRC
+
+*** DAP
+
+#+BEGIN_SRC emacs-lisp
+  (use-package dap-mode)
+  ;; (use-package dap-cpp
+  ;;   :after dap-mode)
+#+END_SRC
+
+*** Company
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :after lsp-mode
+    :hook (lsp-mode . company-mode)
+    :bind
+    (:map company-active-map
+          ("<tab>" . company-complete-selection))
+    (:map lsp-mode-map
+          ("<tab>" . company-indent-or-complete-common))
+    ;; :config
+    ;; (global-company-mode t)
+    :custom
+    (company-minimum-prefix-length 1)
+    (company-idle-delay 0.0))
+
+  (use-package company-box
+    :diminish
+    :hook (company-mode . company-box-mode))
+#+END_SRC
+
 ** Magit
 *** Package
 
@@ -608,18 +696,6 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
   (remove-hook 'git-commit-setup-hook 'with-editor-usage-message)
   (add-hook 'git-commit-setup-hook 'magit-commit-prompt)
   (advice-add 'magit-commit :after 'use-magit-commit-prompt)
-#+END_SRC
-
-*** Company 
-
-#+BEGIN_SRC emacs-lisp
-  (use-package company
-    :config
-    (global-company-mode t))
-
-  (use-package company-box
-    :diminish
-    :hook (company-mode . company-box-mode))
 #+END_SRC
 
 ** Projectile
