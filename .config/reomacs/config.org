@@ -190,6 +190,13 @@ Note: slows down deletions so it can how the animation
     (global-evil-surround-mode 1))
 #+END_SRC
 
+** Keybinds
+
+#+BEGIN_SRC emacs-lisp
+  (reo101/leader-keys
+    "w" '(:keymap evil-window-map :which-key "Window"))
+#+END_SRC
+
 * Hydra
 
 #+BEGIN_SRC emacs-lisp
@@ -840,6 +847,9 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
     (when (file-directory-p "~/Projects")
       (setq projectile-project-search-path '("~/Projects")))
     (setq projectile-switch-project-action #'projectile-dired))
+
+  (reo101/leader-keys
+    "p" '(:keymap projectile-command-map :which-key "Projectile" :package projectile))
 
   (use-package counsel-projectile
     :config (counsel-projectile-mode))
