@@ -279,7 +279,8 @@ Let's make GNU Emacs look a little better.
   (set-face-attribute 'fixed-pitch nil :font "Fira Code Nerd Font Mono" :height 175)
 
   ;; Set the variable pitch face
-  (set-face-attribute 'variable-pitch nil :font "Cantarell" :height 175 :weight 'regular)
+  ;; (set-face-attribute 'variable-pitch nil :font "Cantarell" :height 175 :weight 'regular)
+  (set-face-attribute 'variable-pitch nil :font "Fira Code Nerd Font" :height 175 :weight 'regular)
 
   (use-package unicode-fonts
     :config
