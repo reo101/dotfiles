@@ -860,15 +860,22 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
 ** Show tabs
 
 #+BEGIN_SRC emacs-lisp
-  (use-package highlight-indent-guides
-    :commands highlight-indent-guides-mode
-    :hook (prog-mode . highlight-indent-guides-mode)
-    :config
-    (setq highlight-indent-guides-method 'character
-          highlight-indent-guides-character ?\»
-          highlight-indent-guides-delay 0.01
-          highlight-indent-guides-responsive 'top
-          highlight-indent-guides-auto-enabled nil)) ;nil
+  (defun reo101/highlighter (level responsive display)
+    (if (> 2 level)
+        nil
+      (highlight-indent-guides--highlighter-default level responsive display)))
+
+
+    (use-package highlight-indent-guides
+      :commands highlight-indent-guides-mode
+      :hook (prog-mode . highlight-indent-guides-mode)
+      :config
+      (setq highlight-indent-guides-method 'character
+            highlight-indent-guides-character ?\»
+            highlight-indent-guides-delay 0.01
+            highlight-indent-guides-responsive 'top
+            highlight-indent-guides-auto-enabled nil ;nil
+            highlight-indent-guides-highlighter-function 'reo101/highlighter))
 #+END_SRC
 
 ** Comments
