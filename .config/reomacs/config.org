@@ -502,14 +502,29 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
 #+BEGIN_SRC emacs-lisp
   (defun reo101/lsp-mode-setup ()
     (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-    (lsp-headerline-breadcrumb-mode))
+    (lsp-headerline-breadcrumb-mode)
+    (lsp-lens-mode))
 
   (use-package lsp-mode
     :commands (lsp lsp-deferred)
-    :hook (lsp-mode . reo101/lsp-mode-setup)
-    :init
-    (reo101/leader-keys
-      "l" '(lsp-keymap :whick-key "LSP"))
+    :hook
+    (erlang-mode . lsp)
+    (c++-mode . lsp)
+    (php-mode . lsp)
+    (lsp-mode . reo101/lsp-mode-setup)
+    (lsp-mode . lsp-diagnostics-modeline-mode)
+    (lsp-mode . lsp-enable-which-key-integration)
+    ;; :init
+    ;;  (reo101/leader-keys
+    ;;    "l" '(lsp-keymap :which-key "LSP"))
+    :custom
+    (lsp-log-io t)
+    (lsp-keymap-prefix "C-c l")
+    (lsp-diagnostics-modeline-scope :project)
+    (lsp-register-client
+     (make-lsp-client :new-connection (lsp-stdio-connection "intelephense")
+                      :major-modes '(php-mode)
+                      :server-id 'intelephense))
     :config
     (lsp-enable-which-key-integration t))
 #+END_SRC
@@ -518,9 +533,15 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
 
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-ui
+    :after lsp-mode
     :hook (lsp-mode . lsp-ui-mode)
+    :commands (lsp-ui)
     :custom
-    (lsp-ui-doc-position 'bottom))
+    (lsp-ui-doc-enable t)
+    (lsp-ui-doc-delay 0.75)
+    (lsp-ui-doc-max-height 200)
+    (lsp-ui-doc-position 'bottom) ; 'at-point
+    (lsp-ui-sideline-enable t))
 #+END_SRC
 
 **** Treemacs
@@ -528,6 +549,15 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-treemacs
     :after lsp)
+#+END_SRC
+
+**** LSP Origami
+
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-origami
+    :hook
+    (erlang-mode . origami-mode)
+    (origami-mode . lsp-origami-mode))
 #+END_SRC
 
 **** LSP Ivy
@@ -554,12 +584,97 @@ Smex is a package the makes M-x remember our history.  Now M-x will show our las
   ;; todo
 #+END_SRC
 
+**** Haskell
+
+#+BEGIN_SRC emacs-lisp
+  (use-package haskell-mode
+
+    :config
+    (defcustom haskell-formatter 'ormolu
+      "The Haskell formatter to use. One of: 'ormolu, 'stylish, nil. Set it per-project in .dir-locals."
+      :safe 'symbolp)
+
+    (defun haskell-smart-format ()
+      "Format a buffer based on the value of 'haskell-formatter'."
+      (interactive)
+      (cl-ecase haskell-formatter
+        ('ormolu (ormolu-format-buffer))
+        ('stylish (haskell-mode-stylish-buffer))
+        (nil nil)
+        ))
+
+    (defun haskell-switch-formatters ()
+      "Switch from ormolu to stylish-haskell, or vice versa."
+      (interactive)
+      (setq haskell-formatter
+            (cl-ecase haskell-formatter
+              ('ormolu 'stylish)
+              ('stylish 'ormolu)
+              (nil nil))))
+
+    ;; haskell-mode doesn't know about newer GHC features.
+    (let ((new-extensions '("QuantifiedConstraints"
+                            "DerivingVia"
+                            "BlockArguments"
+                            "DerivingStrategies"
+                            "StandaloneKindSignatures"
+                            "ImportQualifiedPost"
+                            )))
+      (setq
+       haskell-ghc-supported-extensions
+       (append haskell-ghc-supported-extensions new-extensions)))
+
+    :bind (:map haskell-mode-map
+                ("C-c a c" . haskell-cabal-visit-file)
+                ("C-c a i" . haskell-navigate-imports)
+                ("C-c M"   . haskell-compile)
+                ("C-c a I" . haskell-navigate-imports-return)))
+
+  (use-package haskell-snippets
+    :after (haskell-mode yasnippet)
+    :defer)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-haskell
+    :hook (haskell-mode . lsp)
+    :custom
+    (lsp-haskell-process-path-hie "haskell-language-server-wrapper")
+    (lsp-haskell-process-args-hie '()))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ormolu)
+#+END_SRC
+
 *** DAP
 
 #+BEGIN_SRC emacs-lisp
-  (use-package dap-mode)
-  ;; (use-package dap-cpp
-  ;;   :after dap-mode)
+  (use-package dap-mode
+    ;; :bind
+    ;; (("C-c b b" . dap-breakpoint-toggle)
+    ;;  ("C-c b r" . dap-debug-restart)
+    ;;  ("C-c b l" . dap-debug-last)
+    ;;  ("C-c b d" . dap-debug))
+    :init
+    ;; (require 'dap-go)
+    ;; NB: dap-go-setup appears to be broken, so you have to download the extension from GH, rename its file extension
+    ;; unzip it, and copy it into the config so that the following path lines up
+    ;; (setq dap-go-debug-program '("node" "/pathToGoDebugAdapter/debugAdapter.js"))
+    :config
+    (dap-mode)
+    (dap-auto-configure-mode)
+    (dap-ui-mode)
+    (dap-ui-controls-mode))
+
+  (reo101/leader-keys
+    "l"    '(:ignore l   :which-key "LSP")
+    "ld"   '(:ignore ld  :which-key "DAP")
+    "ldb"  '(:ignore ldb :which-key "Breakpints")
+    "ldbb" '(dap-breakpoint-toggle :which-key "Toggle breakpoint")
+    "ldr"  '(dap-debug-restart     :which-key "Reset debugger")
+    "ldl"  '(dap-debug-last        :which-key "Last debugger")
+    "lbd"  '(dap-debug             :which-key "Start debugging"))
 #+END_SRC
 
 *** Company

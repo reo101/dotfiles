@@ -9,7 +9,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(counsel-projectile projectile company-box company mood-one-theme latex-preview-pane auctex tree-sitter-langs tree-sitter wakatime-mode evil-anzu evil-snipe evil-numbers evil-goggles elcord org-superstar hydra rainbow-mode beacon beacon-mode electric-spacing electric-operator electric-cursor electric-case undo-tree all-the-icons general evil-tutor evil-collection evil use-package)))
+   '(company-lsp unicode-fonts xenops evil-surround evil-tex org-fragtog lsp-mode counsel-projectile projectile company-box company mood-one-theme latex-preview-pane auctex tree-sitter-langs tree-sitter wakatime-mode evil-anzu evil-snipe evil-numbers evil-goggles elcord org-superstar hydra rainbow-mode beacon beacon-mode electric-spacing electric-operator electric-cursor electric-case undo-tree all-the-icons general evil-tutor evil-collection evil use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
