@@ -1,0 +1,57 @@
+xrandr --output Virtual-1 --mode 1280x800 &
+
+mpd &
+#mpd-notification &
+mpd_discord_richpresence --fork --no-idle
+
+wal -R
+
+xrdb ${XDG_CONFIG_HOME:-$HOME/.config}/Xresources &
+
+dunst &
+
+setxkbmap -layout us,bg -variant ,phonetic -option grp:lalt_lshift_toggle &
+
+unclutter --timeout 3 --jitter 75 --ignore-scrolling &
+
+systemctl --user import-environment DISPLAY
+
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+
+clipmenud &
+
+xset r rate 300 50 &
+
+# # Map the caps lock key to super...
+# setxkbmap -option caps:Conrol
+
+# # But when it is pressed only once, treat it as escape.
+# killall xcape 2>/dev/null ; xcape -e 'Control=Escape'
+
+# # # Map the menu button to right super as well.
+# # xmodmap -e 'keycode 135 = Super_R'
+
+# # # Turn off the caps lock if on since there is no longer a key for it.
+# # xset -q | grep "Caps Lock:\s*on" && xdotool key Caps_Lock
+# xmodmap -e "clear Lock" 
+
+flameshot &
+
+picom -f --experimental-backend -b &
+
+# emacs --daemon &
+
+# xmodmap -e "keycode 94 = backslash"
+xmodmap -e "clear Lock" -e "keycode 0x42 = Escape"
+
+eject -i on
+
+### WM/DE
+
+lxsession &
+
+case $(tty | cut -b9-) in
+	(1) exec dwm            ;;
+	(2) exec xmonad         ;;
+	(3) exec bspwm          ;;
+esac
