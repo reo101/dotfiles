@@ -16,6 +16,9 @@
 [submodule ".emacs.d"]
 	path = .emacs.d
 	url = https://github.com/plexus/chemacs2.git
+[submodule ".config/nvim"]
+	path = .config/nvim
+	url = https://github.com/reo101/reovim.git
 [submodule ".local/src/mutt-wizard"]
 	path = .local/src/mutt-wizard
 	url = https://github.com/LukeSmithxyz/mutt-wizard
