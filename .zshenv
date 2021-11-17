@@ -8,6 +8,7 @@ export PATH="$PATH:$HOME/.cask/bin"
 export TERMINAL="st"
 export VISUAL=nvim #vim
 export EDITOR="$VISUAL"
+export MANPAGER="nvim +Man!"
 export BROWSER="vimb"
 export SUDO_ASKPASS="/home/reo101/.local/bin/dmenupass"
 export VIMB_DOWNLOAD_PATH="/home/reo101/Downloads"
@@ -23,7 +24,7 @@ export RUSTC_WRAPPER=/usr/bin/sccache #(also checkout ~/.cargo/config because ii
 # Btw also always remember to reference your envvars like: "${ENVVAR}" to prevent against vulnerabilities
 export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_DATA_HOME="${HOME}/.local/share"
-export XDG_CACHE_DHOME="{$HOME}/.cache"
+export XDG_CACHE_HOME="${HOME}/.cache"
 export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/X11/xinitrc"
 export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority" # This line will break some DMs.
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
