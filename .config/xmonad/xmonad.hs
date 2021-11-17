@@ -70,7 +70,10 @@ getUnicodeForWorkspace index = case index of {
                                    }
 
 myWorkspaces :: [String]
-myWorkspaces    = map getUnicodeForWorkspace [1..9]
+myWorkspaces    = map (clickable . getUnicodeForWorkspace) [1..9]
+  where clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++"</action>" |
+                      (i,ws) <- zip [1..9] l,
+                      let n = i ]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -86,37 +89,37 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm              , xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
-    , ((modm,               xK_d     ), spawn "dmenu_run")
+    , ((modm              , xK_d     ), spawn "dmenu_run")
 
     -- close focused window
     , ((modm              , xK_q     ), kill)
 
      -- Rotate through the available layout algorithms
-    , ((modm,               xK_Tab ), sendMessage NextLayout)
+    , ((modm              , xK_Tab   ), sendMessage NextLayout)
 
     --  Reset the layouts on the current workspace to default
-    , ((modm .|. shiftMask, xK_Tab ), setLayout $ XMonad.layoutHook conf)
+    , ((modm .|. shiftMask, xK_Tab   ), setLayout $ XMonad.layoutHook conf)
 
     -- Resize viewed windows to the correct size
-    , ((modm,               xK_n     ), refresh)
+    , ((modm              , xK_n     ), refresh)
 
     -- Move focus to the next window
-    , ((modm,               xK_j     ), windows W.focusDown)
+    , ((modm              , xK_j     ), windows W.focusDown  )
 
     -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
+    , ((modm              , xK_k     ), windows W.focusUp    )
 
     -- Move focus to the master window
-    , ((modm,               xK_m     ), windows W.focusMaster  )
+    , ((modm              , xK_m     ), windows W.focusMaster)
 
     -- Swap the focused window and the master window
-    , ((modm              , xK_space), windows W.swapMaster)
+    , ((modm              , xK_space ), windows W.swapMaster )
 
     -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown   )
 
     -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp     )
 
     -- Shrink the master area
     , ((modm              , xK_h     ), sendMessage Shrink)
@@ -125,13 +128,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_l     ), sendMessage Expand)
 
     -- Push window back into tiling
-    , ((modm              , xK_t     ), withFocused $ windows . W.sink)
+    , ((modm .|. shiftMask, xK_space ), withFocused $ windows . W.sink)
 
     -- Increment the number of windows in the master area
-    , ((modm .|. shiftMask, xK_o ), sendMessage (IncMasterN 1))
+    , ((modm .|. shiftMask, xK_o     ), sendMessage (IncMasterN 1)     )
 
     -- Deincrement the number of windows in the master area
-    , ((modm .|. shiftMask, xK_o), sendMessage (IncMasterN (-1)))
+    , ((modm .|. shiftMask, xK_o     ), sendMessage (IncMasterN (-1))  )
 
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
