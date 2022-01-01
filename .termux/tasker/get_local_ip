@@ -1,0 +1,6 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+interface="wlan0"
+ip="$(ip addr show ${interface} | grep 'inet\b' | awk '{print $2}' | cut -d/ -f1)"
+
+termux-notification --title "IP for ${interface}" --content "The IP for ${interface} is ${ip}" --button1 "Copy to clipboard" --button1-action "termux-clipboard-set '${ip}'" --on-delete "termux-clipboard-set '${ip}'"
