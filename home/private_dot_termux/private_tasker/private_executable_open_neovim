@@ -1,0 +1,4 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+cd ~/.config/nvim/
+tmux new -s "neovim" "nvim" 2>/dev/null || tmux a -t "neovim"

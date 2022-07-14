@@ -1,0 +1,20 @@
+cv23
+cv24
+
+cv02
+cv19
+cv25
+cv26
+cv28
+cv30
+cv32
+ss02
+ss03
+ss05
+ss07
+ss09
+zero
+
+"cv02,cv19,cv23,cv24,cv25,cv26,cv28,cv30,cv32,ss03,ss05,ss07,ss09,zero"
+
+pyftfeatfreeze -f "cv02,cv19,cv25,cv26,cv28,cv30,cv32,ss02,ss03,ss05,ss07,ss09,zero" -S -U SC font.ttf font-patched.ttf

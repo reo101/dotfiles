@@ -1,0 +1,32 @@
+[".config/nvim"]
+	type = "git-repo"
+	url = "https://www.github.com/reo101/reovim.git"
+	refreshPeriod = "168h"
+[".config/zsh/fast-syntax-highlighting"]
+	type = "git-repo"
+	url = "https://www.github.com/zdharma/fast-syntax-highlighting.git"
+	refreshPeriod = "168h"
+[".config/zsh/fzf"]
+	type = "git-repo"
+	url = "https://www.github.com/junegunn/fzf.git"
+	refreshPeriod = "168h"
+[".config/zsh/zsh-autosuggestions"]
+	type = "git-repo"
+	url = "https://www.github.com/zsh-users/zsh-autosuggestions.git"
+	refreshPeriod = "168h"
+[".emacs.d"]
+	type = "git-repo"
+	url = "https://github.com/plexus/chemacs2.git"
+	refreshPeriod = "168h"
+[".local/src/mpd-rich-presence-discord"]
+	type = "git-repo"
+	url = "https://www.github.com/justas-d/mpd-rich-presence-discord.git"
+	refreshPeriod = "168h"
+[".local/src/mutt-wizard"]
+	type = "git-repo"
+	url = "https://github.com/LukeSmithxyz/mutt-wizard"
+	refreshPeriod = "168h"
+[".local/src/wal-discord"]
+	type = "git-repo"
+	url = "https://github.com/guglicap/wal-discord.git"
+	refreshPeriod = "168h"

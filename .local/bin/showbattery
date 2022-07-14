@@ -1,1 +1,0 @@
-notify-send "🔋 Battery" "🔋 Battery is at $(cat /sys/class/power_supply/BAT0/capacity)%"

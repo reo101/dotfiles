@@ -1,3 +1,0 @@
-#!/data/data/com.termux/files/usr/bin/bash
-
-pidof sshd && killall sshd || sshd
